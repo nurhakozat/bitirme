@@ -1,0 +1,4177 @@
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    
+    \title{Veri Biliminde Konular: Zaman Serilerinde Anomali ve Öngörü}
+      
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+\begin{document}
+
+\author{Nurhak Özat}    
+\maketitle
+\pagebreak
+
+\tableofcontents
+\pagebreak
+    
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} install.packages(\PYZdq{}Quandl\PYZdq{}, repos=\PYZsq{}http://cran.us.r\PYZhy{}project.org\PYZsq{})}
+        \PY{c+c1}{\PYZsh{}install.packages(\PYZdq{}forecast\PYZdq{}, repos=\PYZsq{}http://cran.us.r\PYZhy{}project.org\PYZsq{})}
+        \PY{k+kn}{library}\PY{p}{(}Quandl\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}forecast\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}tseries\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message:
+"package 'Quandl' was built under R version 3.4.3"Loading required package: xts
+Loading required package: zoo
+
+Attaching package: 'zoo'
+
+The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric
+
+Warning message:
+"package 'forecast' was built under R version 3.4.3"Warning message:
+"package 'tseries' was built under R version 3.4.3"
+    \end{Verbatim}
+
+    \section{Zaman Serisi ve Temel
+Kavramlar}\label{zaman-serisi-ve-temel-kavramlar}
+
+Zaman serisi, bir değişkenin zaman içindeki hareketini gözlemleyen,
+gözlem sonuçlarının zamana göre dağılım gösterdiği serilerdir. Bütün
+değerleri belirli bir zman farkı ile art arda gelen nümerik verilerden
+oluşur. Bu değerler günlük, haftalık, aylık, yıllık olabilirler.
+
+Zaman serisi değişkeni, n zaman serisindeki veri sayısı olmak üzere;
+x(t), (t= 1, 2, \ldots{}, n) - ilk gözlemlenen veri x(1), - ikinci
+gözlemlenen veri x(2), - son gözlemlenen veri x(n) ile ifade edilir.
+
+Sürekli Zaman Serileri; zaman içinde sürekli olarak kaydedilebilen
+verilere sahip serilerdir elektrik sinyalleri, voltaj, ses titreşimleri
+gibi mühendislik alanlarına ait serilerdir.
+
+Kesikli Zaman Serileri; belli aralıklarda elde edilebilen verilere sahip
+serilerdir. faiz oranı, satış hacmi, üretim miktarı gibi iktisadi
+serilerdir.
+
+Zaman serilerinde veriler nicel ya da nitel verilerden oluşur.
+
+\begin{itemize}
+\item
+  Nitel ( Kalitatif ) Yöntemler : Öngörü işlemi ile bilgilerden
+  yararlanılarak geleceğe ait tahmin yapılmaktadır. Dolayısıyla, öngörü
+  yöntemleri tecrübeye, kararlara, bilirkişinin düşüncelerine
+  dayanmaktadır. Bu tür öngörü yöntemlerine genel olarak nitel (
+  kalitatif ) yöntemler denir.
+\item
+  Nicel ( Kantitatif ) Yöntemler : Öngörü yöntemleri subjectif
+  kararlardan ziyade elde edilen verilerin yapısını açıklayabilen
+  modellere dayanırsa bu tür modellere dayanan öngörü yöntemlerine genel
+  olarak nicel ( Kantitatif ) yöntemler denir.
+\end{itemize}
+
+Zaman Serisi analizinde,iki çeşit değişken sayısı bulunur.
+\begin{itemize}
+\tightlist
+\item
+  Tek Değişkenli ( Unvariate Time Series ): Eğer zaman serisi tek değişkenin zaman içerisindeki hareketi incelenir. ,
+
+\item
+  Çok Değişkenli ( Multivariate Time Series ): Eğer birden fazla değişkenin zaman içindeki değişimlerini incelendiğinde kullanılır.
+\end{itemize}
+
+\section{Zaman Serisi Bileşenleri :}\label{zaman-serisi-bileux15fenleri}
+
+Zaman serilerinin gözlemlenen değerleri arasında artma, azalma ya da
+belli dönemlerde sabit kalma gibi değişmeler gerçekleşebilir. Bu
+değişmeler çeşitli nedenleri olabilir. Bu değişmelerin incelenmesi , bir
+öngürü yapılmak istendiğinde yardımcı olur. Nedeni ise zaman serileri
+gelecekte de benzer özellikler gösterebilir. Bu değişmeler zaman
+serilerinin bileşenlerini oluşturur. Bu değişmeler dört grupta
+incelenir: 
+
+- Trend bileşen 
+
+- Mevsimsel bileşen
+
+- Çevrimsel bileşen (Konjoktürel ) 
+
+- Düzensiz Bileşen ( Rassal Bileşen )
+
+\subsection{Trend :}\label{trend}
+
+Zamana göre gözlemlenen bir değişkenin uzun dönemde gösterdiği artış
+veya azalışa denir. İki farklı şekilde ifade edilebilir.Trend iki
+şekilde olabilir: 
+
+- Doğrusal Trend 
+
+- Doğrusal Olmayan Trend
+
+Gözlemlerin toplanış sırası ile aldığı değerler arasındaki korelasyonun
+önemini belirlemek için trend analizleri yapılır. Trend analizi
+matematiksel bir tekniktir ve bu analiz ile geçmişe ait sonuçları
+kullanarak geleceğe yönelik sonuçlar için tahmin yapılır. Serinin gözlem
+sayısı arttıkça trende sahip olmadığı daha kolay anlaşılır. Zaman
+içerisinde artış veya azalış göstermeyen, aynı düzeyde kararlılık
+gösteren serilerin ise trendi yoktur.
+
+Trend doğrusal olabileceği gibi üstel de olabilir. Trend tamamen
+öngörülebiliyorsa deterministik, tamamen öngörülemiyorsa rassaldır.
+
+\subsection{Mevsimsel Bileşen:}\label{mevsimsel-bileux15fen}
+
+Sistematik ( gözlemlenebilir ve ölçülebilir ) etkileri olan
+faktörlerdir. Mevsim etkisinde olan zaman serileri yılın bazı
+dönemlerinde diğer dönemlere göre daha yüksek ve ya daha düşük değerler
+ulaşır. Örnek olarak; bazı dönemlerde doğalgaz kullanımının artması veya
+azalması verilebilir.Mevsimsellik farklı biçimlerde ( Anneler Günü,
+Babalar Günü, Öğretmenler günü , Dini bayramlar da yapılan alışverişteki
+artışlar )gözlemlenebilir. Zaman serilerinde mevsimsellik etkisi bir yıl
+ve daha az zaman süresinde tekrarlanan periyodik dalgalanmalar olarak
+tanımlanır.
+
+Zaman serisi analizlerinde mevsimsel etkinin olup olmadığını belirlemek
+için bir çok yöntem kullanılır. Zaman serisinde mevsimsel bileşen varsa
+, veriden mevsimsel dalgalanmaları arındırılması için en çok kullanılan
+yöntemler mutlak ve nispi hareketli ortalamalar ve ortalama yüzde
+yöntemleridir.
+
+\subsection{Çevrimsel Bileşen:}\label{uxe7evrimsel-bileux15fen}
+
+Mevsimsel değişimle ilişkisi olmayan daha uzun zaman aralığındaki
+dönemsel değişimdir.Trend doğrusu veya eğrisinin etrafındaki uzun süreli
+dalgalanmalardır. Örnek olarak; Ekonominin maksimum olduğu noktada
+oluşan bir kriz ile birlkte ekonominin düşüşe başlamasını , devamında
+belli bir süre hareketsizlik gözlenmesi ,ardından yeniden kıvılcımlarla
+canlanmaya başlamasını ve bu sürecin tekrarlanıp devam etmesini
+verebiliriz.
+
+\subsection{Düzensiz Bileşen ( Rassal Bileşen
+)}\label{duxfczensiz-bileux15fen-rassal-bileux15fen}
+
+Rassal veya geçici olarak ortaya çıkan , trend , mevsimsel ve çevrimsel
+bileşenlerin dışında kalan bileşenelere veya belirli bir modele uymayan
+dalgalanmalara düzensiz bileşen denir. Değişimin zamanı ve şiddeti
+tahmin edilemez. Serideki yanıltıcı hareketlerdir.
+
+\section{Geleneksel Zaman Serisi Ayrışım
+Yöntemleri}\label{geleneksel-zaman-serisi-ayrux131ux15fux131m-yuxf6ntemleri}
+
+Serinin trend konjonktürel ve mevsimsel etkisi altında kaldığını
+varsayılmaktadır. Toplamsal Ayrıştırma ( Additive )ve Çarpımsal
+Araştırma ( Multiplicative ) yöntemleri olmak üzere iki yöntemi vardır.
+
+Toplamsal Ayrıştırma ( Additive ) :
+
+\[ \hat Y_{d_t} = T_{t}+ S_{t}+ C_{t}+ I_{t} \]
+
+Çarpımsal Araştırma ( Multiplicative ):
+
+\[ \hat Y_{d_t} = T_{t}\cdot S_{t}\cdot C_{t}\cdot I_{t} \]
+
+    \section{Doğrusal Zaman Serisi
+Analizi:}\label{doux11frusal-zaman-serisi-analizi}
+
+\subsection{1- Otoregresif Süreç ( AutoRegressive Process
+)}\label{otoregresif-suxfcreuxe7-autoregressive-process}
+
+Otoregresif süreç AR ( p ) ile ifade edilir ve serinin mevcut değeri
+önceki p adet değere bağlıdır.
+
+p'ninci dereceden otoregresif süreç: \(Y_{t}\) değeri sadece bir önceki
+değerine değil önceki bir çok değere bağlı olabilir.
+\[ \hat Y_{t} = ϵ_{t}+a_{0}+ \sum_{i=1}^\ell a_{i}\cdot y_{t-i}  \]
+
+Başka bir şekilde ifade edilirse, bağımlı değişken geçmişteki değerinin
+bir fonksiyonudur.( p otoregresif sürecin derecesini vermektedir. )
+
+a : sabit terim
+
+\(a_{1} ….\) : Gecikmeli değerlerin şimdiki değerle olan ilişkisi
+
+ε : hata terimi -- rassal şoklar
+
+Otoregresif süreç durağan olma koşulu
+
+\[ |a_n|\leq 1 \text{ ve } \sum_{i=1}^{n-1} a_i \leq 1 \]
+
+olmasına bağlıdır.
+
+Otoregresif modeli özetlemek gerekirse:
+
+Tüm gecikmeli değerler \(Y_t\) üzerinde birikimli bir etkiye sahiptir.
+Dolayısıyla otoregresif modellerin uzun süreli bir etkiye sahiptir.
+Rassal değişken ile \(y_{t}\) arasındaki korelasyon sıfır olduğundan
+otoregresif modelleri En küçük kareler yöntemini kullanarak tahmin
+edilebilir. Otoregresif süreçlerde ACF gecikmeden sonra üstel olarak
+azalmakta ve PACF değeri de sıfır değerini almaktadır.
+
+\subsection{2- Hareketli Ortalama Süreci ( Moving Average
+)}\label{hareketli-ortalama-suxfcreci-moving-average}
+
+Serinin gecikmeli hata terimi, şu andaki hata terimini etkilemesine
+hareketli ortalama süreci denir. Değişkenin tahmin değeri hata teriminin
+tahmin değeri ile ilişkilidir.Modelin derecesi geçmiş dönemdeki hata
+terim sayısına gore belirlenir. Örneğin geçmiş dönemde bir hata varsa
+modelin derecesi 1, n tane hata varsa modelin derecesi n olmaktadır.
+Hareketli ortalama sürece MA (q) olarak ifade edilir ve
+\(Y_{t}\sim N(0,s^2_{e})\) olacak şekilde
+\[ \hat Y_{d_t} = b_{0} + \sum_{i=1}^q b_i e_{t-i}  \]\\
+kurulur.
+
+\(b_{i}\): bilinmeyen sabit parametrelerdir.
+
+\subsection{3- Karma Otoregresif Hareketli Ortalama Süreci
+(ARMA)}\label{karma-otoregresif-hareketli-ortalama-suxfcreci-arma}
+
+Zaman serilerinde veriler bazen hem otokorelasyon hem de kısmi
+otokorelasyon fonksiyonlarını belirli bir gecikmede kesilmeden sıfıra
+doğru çok yavaş hareket edebilir. Bu durumda seri hem otoregresif hem de
+hareketli ortalama bileşenlerini aynı anda içerebilir. Özetle seri
+modelini hem AR, hem de MA bileşenleriyle p ve q dereceden olmak üzere
+ARMA(p,q) olarak tanımlanır
+
+Arma sürecinin özetlemek gerekirse:
+
+Karma otoregresif hareketli ortalama sürecinin ARMA (p,q ) otokorelasyon
+fonksiyonu ve otoregresif sürecin AR(p) sürecinin özelliklerini taşır.
+
+ARMA(p,q) modelinde büyük gecikme uzunluklarında ACF ve PACF değerleri
+sıfıra yaklaşır. Model de durağanlığı AR(p) koşulu ile , tersine
+çevirebilirliği ise MA(q) koşuluyla aynıdır.
+
+\subsection{4- Homojen Durağan Olmayan Süreç
+(ARIMA)}\label{homojen-duraux11fan-olmayan-suxfcreuxe7-arima}
+
+Fark alma işlemiyle, durağan olmayan modellerin durağan hale
+dönüştürülmüş serilere uygulanmasıyla elde edilen modellere ``durağan
+olmayan doğrusal stokastik modeller'' denir. Bu tür serilere uygulanan
+model ARIMA modelidir. Bu modeller d dereceden farkı alınmış serilere
+uygulanan, değişkenin t-dönemindeki değerinin belirli sayıdaki geri
+dönem değerleri ile aynı dönemdeki hata teriminin doğrusal bir
+fonksiyonu olarak ifade edildiği AR ve değişkenin t-dönemindeki
+değerinin aynı dönemdeki hata terimi ve belirli sayıda geri dönem hata
+terimlerinin doğrusal fonksiyonu olarak ifade edildiği MA modellerinin
+birer birleşimidir. Farklı bir şekilde ifade edilirse ARIMA,
+otoregresresif (AR), entegre (I) ve hareketli ortalama (MA)
+süreçlerinden oluşur. Modelin gösterimi ARIMA (p, d, q) şeklinde ifade
+edilir. Burada p değişkeni otoregresif(AR) model derecesini, q değişkeni
+hareketli ortalama (MA) derecesini ve d değişkeni de fark alma
+derecesini gösterir.
+
+Eğer d=1 ise orijinal seri birinci derecen farkı alınarak durağan hale
+getirilmiştir, d=0 olduğunda ise orijinal seri zaten durağandır ve
+farkının alınmasına da gerek yoktur. Bu durumda ARIMA(p,d=0,q)=ARMA(p,q)
+olur.
+
+Örnek olarak ARIMA(3,2,2) alınırsa; zaman serisini durağan olması için
+farkının iki kez (d= 2) alınması gerekir. İlk farkı alınan zaman
+serisini ARMA(2,2) süreci olarak yazılabilir. Bu süreçte otoregresif
+modeli (AR) iki terimiyle ve hareketli ortalama modeli (MA) iki
+terimiyle modellenebilir.
+\pagebreak
+
+Bilgi Kriterleri :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Akaiki bilgi kriteri (Akaike information criterion-AIC)
+\end{enumerate}
+
+Akaiki, veri kümeleri için istatistiksel göreceli model ölçüsüdür. AIC
+modeli verilerin mmodellerin her birini göreceli olarak tahmin ediyor.
+Doğru modelin seçilmesini sağlar. Verilen bilgileri kullanara; model
+verileri oluşturur, işlem temsil etmek için kullanılır ve bunlara
+dayanarak göreceli bir tahmin sunmaktadır. Bu sayede ,modelin uyum
+ölçüsü ve model karmaşıklığı anlaşılır.
+
+\[ AIC = 2k - 2ln(L) \]
+
+k: tahmin edilen parametre sayısı
+
+L: maksimum likelihood
+
+Model seçiminde en düşük AIC değeri seçilir.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Schwarz Bayesian kriteri (BIC)
+\end{enumerate}
+
+Schwarz Bayesian bilgi kriteri ( BIC ) değeri, otoregresif sürecin
+gecikme derecesinin belirlenmesinde kullanılır.Akaiki bilgi kriteri ile
+yakından ilişkilidir. \[ BIC = ln(n)\cdot k - 2ln(L) \]
+
+L = modelin olabilirlik fonksiyonunun maksimum değeri
+
+x = gözlenen veriler
+
+n = veri noktalarının sayısı
+
+k = model tarafından tahmin edilen parametre sayısı
+
+Model seçiminde en düşük BIC değeri seçilir.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Hannan Quinn bilgi kriteri (HOİC )
+\end{enumerate}
+
+\[ HOİC= -2L_{max} + 2k\cdot ln(ln(n)) \]
+
+Bilgi kriterleri iki bileşeni vardır:
+
+\begin{itemize}
+\tightlist
+\item
+  Kalanların karelerinin toplamı
+\item
+  Eklenen her parametrenin neden olduğu serbestik derecesi kaybı için
+  modelin tabi tutulduğu ceza
+\end{itemize}
+
+bileşenleridir. Modele eklenen her yeni değişken, yani her yeni gecikme,
+ceza teriminin değerini arttırır. Aynı zamanda kalanların karelerinin
+değerini düşürmektedir. Akaiki bilgi kriteri (AIC) değeri, otoregresif
+sürecin gecikme derecesinin belirlenmesinde kullanılır.Schwarz Bayesian
+bilgi kriteri ( BIC ) değeri, otoregresif sürecin gecikme derecesinin
+belirlenmesinde kullanılır.
+
+BIC , AIC ile karşılaştırıldığında edildiğinde örnek büyüklüğü orta veya
+geniş ise gecikme sayısı az olan AR modelin seçimine eğilim söz
+konusudur.
+
+    \section{Box-Jenkins Yöntemi
+(ARIMA)}\label{box-jenkins-yuxf6ntemi-arima}
+
+George E.P. BOX ve Gwilym M. JENKINS tarafından durağan tek değişkenli
+zaman serilerinin analizi için geliştirilen (Yaffee and McGee 2000) ve
+öngörü uygulamalarında kullanılan Box-Jenkins yöntemi, ARIMA modelleri
+olarak da adlandırılmaktadır. Box-Jenkis yöntemi ele alınan zaman
+serisinin özelliklerine göre belirlenen çeşitli modeller arasında uygun
+olanını seçerek tahmin etme sürecini kapsamaktadır.Zaman serisi
+modellerinde serinin kendi iç dinamiği önemli olup oluşturulan modeldeki
+değişken, kendi gecikmeli değerleri ve hata teriminin gecikmeli
+değerleriyle açıklanmaktadır. Box ve Jenkins uygulama aşamaları:
+
+\begin{itemize}
+\tightlist
+\item
+  Yöntemi Belirleme :
+\end{itemize}
+
+Durağan zaman serisine ARMA modellerinden herhangi birinin aday olarak
+belirlenmesi aşamasıdır. Yani ARMA (p,q) modelinde p ve q nun
+derecesinin bulunması aşamasıdır.Değerleri otoregresif ve hareketli
+ortalamalar sürecinin özelliklerinden faydalanılarak bulunur. ARMA
+modelleri otokorelasyon ve kısmi otokorelasyon fonksiyonları sayesinde
+karakterize edilebilir.
+
+\begin{itemize}
+\tightlist
+\item
+  Parametre Tahmini :
+\end{itemize}
+
+ARMA modellerinde parametrelerini tahmin edilebilmesi için bir çok
+yöntem bulunmaktadır.Yöntemler olabilirlik fonksiyonuna dayalı yöntemler
+ya da eğrisel en küçük kareler yöntemleridir. ARMA modelinin
+parametreleri olabilirlik fonksiyonunun maksimize edilebilir ya da hata
+kareler fonksiyonunun minimize edilmesiyle bulunabilir.
+
+\begin{itemize}
+\tightlist
+\item
+  Teşhis Etme :
+\end{itemize}
+
+Modelin yeterliliğini kontrol edilmesidir.Zaman serisi modeli belirlenip
+parametreleri tahmin edildikten sonra ayırt edici testler yardımıyla
+belirlenen modelin ne kadar doğru olduğu ortaya konulabilir. Modelin
+artık terimleri, test süreci için önemlidir. Belirlenen model yeterli
+ise artıklar yaklaşık olarak bir beyaz gürültü sürecidir (white noise).
+Beyaz gürültü sürecinde olması, ARIMA (p,d,q) modeli öngörü için yeterli
+düzeydedir.
+
+LjungBox testi, Modelin artık terimlerinin standart normal dağılımlı
+rasgele değişkenlerin dizisinden oluşan bir beyaz gürültü sürecinde olup
+olmadığının test etmek için kullanılmaktadır.
+
+    \section{Durağanlık}\label{duraux11fanlux131k}
+
+Serinin durağan olması, zaman serisinde ortalaması, varyansı ve
+kovaryansı zaman içinde sabit kalmasıyla söylenir. Durağan zaman
+serisinde ard arda gelen iki değer arasındaki fark zamanın kendisinden
+kaynaklanmamakta, sadece zaman aralığından kaynaklanmaktadır. Bundan
+dolayı serinin ortalaması zamanla değişmemektedir. \(Y_{t}\) serisi
+tanımlayalım.
+
+\[ E(Y_{t}) = µ \] \[ var(Y_{t}) = γ_{0} \]
+\[ cov(Y_{t},Y_{t+k} ) = γ_{k} \]
+
+Başlangıç noktasını t'den t + k'ye kaydırdıgımızı düşünelim. Y durağan
+ise \(Y_{t}\) ve \(Y_{t+k}\) serilerinin ortalama, varyans ve
+kovaryansları aynı olmalıdır. Eğer k = 0 ise
+\(cov(Y_{t}, Y_{t+0}) = var(Y_{t}) = σ^2\) 'dir
+
+Durağan olmayan seriler birim kök içerirler. Bir serideki birim kök
+sayısı serinin durağan olana dek alınması gereken fark sayısına eşittir.
+\(Y_{t}\) serisi d= 1 farkı alınınca durağan hale geliyorsa seri 1.
+dereceden durağandır denir ve I(1) olarak gösterilir. Genel olarak seri
+d kez farkı alınınca durağan oluyorsa seri d. dereceden durağandır denir
+ve I(d) ile gösterilir.
+
+\subsection{Trend Durağanlık ve Fark
+Durağanlık}\label{trend-duraux11fanlux131k-ve-fark-duraux11fanlux131k}
+
+Trend durağan olmayan süreçler için durağanlaştırmak için iki temel
+yöntem vardır:
+
+\begin{itemize}
+\tightlist
+\item
+  Durağan olmayan zaman serisi için kurulacak regresyon denkleminde,
+  seri trend (zaman) üzerine regrese edilir. Daha sonra bu regresyondan
+  elde edilen kalıntılar üzerinde analizler yapılır.
+\item
+  Zaman serisine trend bir regresör olarak ilave edilerek gerekli
+  analizler yapılır.
+\end{itemize}
+
+\[Y_{t} = \mu + B_{t} + e_{t}\]
+
+(\(Y_{t}\): deterministik trend,\(e_{t} ~ IID(0,)\): durağan stokastik
+bileşen)
+
+Rassal Yürüyüş:
+
+Rastsal yürüyüşü en basit şekilde şöyle gösterilir:
+
+\[ Y_{t} = Y_{t−1} + u_{t} \] ( \(u_{t}\): beyaz gürültü)
+
+Markov 1.derece özbağlanımsal tasarımla rastsal yürüyüş bağlantısı :
+
+\[ Y_{t} = ρ\cdot Y_{t−1} + u_{t}  ,  −1 < ρ < 1 \]
+
+Rastsal yürüyüşte ρ = 1 oldugu için, bu sürece ˘ ``birim kök'' (unit
+root) süreci de denilmektedir.Rastsal yürüyüş sürecinde \(u_{t}\)
+sarsıntıları kalıcıdır:
+
+\[ Y_{1} = Y_{0} + u_{1} \]
+\[ Y_{2} = Y_{1} + u_{2} = Y_{0} + u_{1} + u_{2} \]
+\[ Y_{3} = Y_{2} + u_{3} = Y_{0} + u_{1} + u_{2} + u_{3} \] T
+dönemindeki deger :
+
+\[ Y_{t} = Y_{0} + \sum_t u_{t}  \]
+
+Herhangi bir dönemdeki değerin daha önceki tüm rastsal sarsıntıların
+toplamı olmasına, rastsal yürüyüşün ``sonsuz bellek'' (infinite memory)
+özelligi de denir. \(E(u_{t}) = 0\) oldugundan, \(E(Y_{t}) = Y_{t}\)
+olduguna dikkat edelir. Başka bir ifadeyle \(Y_{t}\) 'nin ortalaması
+sabittir.Rastsal hatalar toplandıgı için, \(var(Y_{t})\) sürekli
+artmakta ve böylece duraganlık varsayımı engellenmemiş olmaktadır.
+\(Y_{t}\) 'nin varyansının \(var(Y_{t}) = tσ^2\) oldugu gösterilebilir.
+Buna göre, t sonsuza giderken varyans da sonsuza gitmektedir
+\pagebreak
+\subsection{Durağanlık Analizi}\label{duraux11fanlux131k-analizi}
+
+Durağanlık analizini grafiksel analiz, kolegram analiz ve birim kök
+analizi kullanılarak yapılmaktadır.
+
+\subsubsection{Birim Kök Analizi}\label{birim-kuxf6k-analizi}
+
+Serinin durağanlığını ve durağanlık derecesini belirlemede
+kullanılır.Birim Kök Analizi'nde 5 farklı yöntem bulunmaktadır.
+
+\begin{itemize}
+\tightlist
+\item
+  Dickey Fuller Testi (DF)
+\item
+  Genişletilmiş Dickey-Fuller Testi (ADF)
+\item
+  Phillips- Perron Testi (PP)
+\item
+  Kwiatkowski-Phillips-Schmidt-Shin Testi (Kpss)
+\item
+  Ng Perron Testi
+\end{itemize}
+
+En çok kullanılan DF,ADF ve PP testleridir.
+
+\subsubsection{Dickey Fuller Testi (DF)}\label{dickey-fuller-testi-df}
+
+Serinin durağan olmadığı (birim köke sahip olduğu) boş hipotezinin ,
+durağan olduğu (birim kök olmadığı ) alternatif hipotezine göre
+sınanmasıdır. \(Y_{t}\) değişkeninin bu dönemde aldığı değerin geçen
+dönemdeki değeri olan ile ilişkisi, \[ Y_{t}=p\cdot Y_{t-1} + u_{t}\]
+şeklinde ifade edilir. (\(u_{t}\): kalıntı terim )
+
+Yukarıdaki model 1. dereceden otoregresif AR(1) modelidir.ρ katsayısı 1
+eşit olursa birim kök sorunu (durağan olmama durumu) ortaya çıkmaktadır
+ve model \(p=1\) ise \[ Y_{t}=Y_{t-1} + u_{t} \] şeklini almaktadır.
+Sonuç bir önceki dönemde iktisadi değişkenin değerinin ve dolayısıyla o
+dönemde maruz kaldığı şokun olduğu gibi sistemde kalması anlamına gelir.
+Bu şokların kalıcı nitelikte olması serinin durağan olmaması ve zaman
+içinde gösterdiği trendin stokastik olması anlamına gelir.
+
+\(p<1\) ise geçmiş dönemlerdeki şoklar belli bir süreetkilerini
+sürdürseler de, bu etki giderek azalacak ve kısa bir dönem sonra tamamen
+ortadan kalkacaktır.
+
+\subsubsection{Genişletilmiş Dickey-Fuller Testi
+(ADF)}\label{geniux15fletilmiux15f-dickey-fuller-testi-adf}
+
+Dickey-Fuller testi, hata terimlerinin otokorelasyon içermesi halinde
+kullanılamamaktadır. Zaman serisinin gecikmeli değerleri kullanılarak
+hata terimindeki otokorelasyon ortadan kaldırılabilmektedir.
+Dickey-Fuller bağımlı değişkenin gecikmeli değerlerini, bağımsız
+değişken olarak modele dahil eden yeni bir test geliştirmiştir. Bu test
+Genişletilmiş Dickey-Fuller testidir. Burada gecikmeli değişkene ait
+uygun gecikme mertebesi belirlenirken Akaike ve Schwarz kriterlerinden
+yararlanılmaktadır.
+
+ADF denklemi :
+\[\delta Y_{t}= a+ b_{t}+\gamma Y_{t-1}+ u_{t-1} +c\sum_{i=1}^n  \delta Y_{t} \]\\
+\(\delta\) : delta
+
+\subsubsection{Phillips- Perron Testi
+(PP)}\label{phillips--perron-testi-pp}
+
+Phillips-Perron birim kök testi ise hata teriminin zayıf derecede
+bağımlı olmasına ve heterojen olarak dağılmasına izin vermektedir. Bu
+sayede otokorelasyon sorunu ortaya çıkmamaktadır.
+
+\subsubsection{Kwiatkowski-Phillips-Schmidt-Shin Testi
+(Kpss)}\label{kwiatkowski-phillips-schmidt-shin-testi-kpss}
+
+KPSS testinde amaç gözlenen serideki deterministik trendi arındırarak
+serinin durağan olmasını sağlamaktır. Bu testte kurulan birim kök
+hipotezi ADF testinde kurulan hipotezlerden farklıdır. Sıfır hipotezi
+serinin durağan olduğunu ve birim kök içermediğini, buna karşın
+alternatif hipotez ise seride birim kök olduğunu ve durağan olmadığını
+ifade eder. Boş hipotezdeki durağanlık trend durağanlıktır. Çünkü
+seriler trendden arındırılmışlardır.
+
+Trendden arındırılan seride birim kök olmaması, serinin trend
+durağanlığını gösterir. KPSS testinin en önemli özelliği bir veya daha
+büyük bir MA yapısı içeren serilerde ADF' nin aksine gücünün
+azalmamasıdır.
+
+KPSS testi LM testi ile benzer biçimde belirlenmektedir. Dolayısıyla LM
+istatistiğinin oluşumu önemlidir. LM testinde boş hipotez, rassal
+yürüyüşün sıfır varyansa sahip olduğunu ve serinin deterministik trend,
+rassal yürüyüş ve durağan kalıntılar toplamından oluştuğunu ima eder.
+
+\subsubsection{Ng Perron Testi}\label{ng-perron-testi}
+
+Ng-Perron birim kök testi, Phillips-Perron birim kök testinde ortaya
+çıkan hata teriminin hacmindeki çarpıklığın düzeltilmesi için
+geliştirilmiştir.PP testinde serilerde negatif hareketli ortalama yapısı
+olduğunda, büyük oranda hata teriminde nörneklem çarpıklığı olmaktadır.
+DF testlerinde bu durum çok büyük bir sorun yaratmamaktadır.
+
+NG - Perron testi bu nedenle PP testlerini ve bilgi kriterlerini
+modifiye etmektedir.MSB ve MPT lerde sıfır hipotezi birim kökün
+olmadığını , alternatif hipotez ise birim kökün varlığını ifade eder.
+
+adf.test ve pp.test için: - H0: birim kök içerir. - HA: birim kök
+içermez, durağandır.
+
+kpss.test için: - H0: level veya trend durağandır. - HA: durağan
+değildir.
+
+Test sonuçlarına göre adf ve pp testleri için p-value (test
+istatistiğinin olasılık değeri) \%5'den küçük ise (\%95 güven
+seviyesinde) testin boş hipotezi ret edilir. Kpss test için ise durumun
+tam tersi doğrudur.
+
+    \section{Normallik Testi- Shapiro Wilk
+Test}\label{normallik-testi--shapiro-wilk-test}
+
+Veri seti üzerinde yapılan bir çok veri analizi verinin normal dağıldığı
+varsayımına dayanır. Veri analizine başlamadan önce verinin normal
+dağılıma uygun olup olmadığına bakılmalıdır. Normallik kontrolü için
+yaygın olarak kullanılan testlerden birisi de Shapiro-Wilks testidir.
+
+Shapiro-Wilk (1965) testi, verinin sıra istatistiklerinin uygun bir
+lineer bileşeninin karesinin, kareler toplamına bölümü uygulanarak elde
+edilir.
+
+\[  W = \frac{(\sum_{i=1}^n a_{i} x_{i})^2}{\sum_{i=1}^n (x_{i} - x^-_{i})^2 }  \text{ ve } a_{i}=(a_{1},a_{2},...,a_{n})   \]
+
+\(a_{i}=(a_{1},a_{2},...,a_{n})\): standart normal dağılımda N(0,1)' da
+n adet sıra istatistiğinin beklenen değerlerinin vektörünü ifade eder.
+
+Sadece numeric (numeric factor) veriyi, argüman olarak
+shapiro.test(veri) fonksiyonuna eklenir.
+
+    \section{Otokorelasyon}\label{otokorelasyon}
+
+Otokorelasyon durumunda parametrelerin en küçük kareler tahmincileri
+sapmasız ve tutarlıdır,ancak etkin değildir. Hata teriminin varyansının
+tahmincisi sapmalıdır ve bu yüzden parametrelerin varyansları da sapmalı
+olur. Pozitif otokorelasyon varsa sapma negatif olur. Varyanslar
+olduğundan küçük bulunur. Bunun sonucunda t test istatistiği değeri
+büyük çıkar. Böylece anlamsız bir katsayının anlamlı olma olasılığı
+artar. \(R_{2}\) de yükselir. Dolayısıyla F değeri olduğundan büyük
+bulunur. Sonuç olarak t ve F testleri güvenilirliğini yitirip yanıltıcı
+sonuç verirler. Otokorelasyonu durumunu göstermek için 2 yöntem
+kullanılır.
+
+\begin{itemize}
+\tightlist
+\item
+  Grafik Yorumu
+\item
+  Otokorelasyon Testleri ( Durbin-Watson d , Wallis , King ,Breush ve
+  Godfrey)
+\end{itemize}
+
+NOT: Zaman serilerinin durağan olması demek, zaman içinde varyansın ve
+ortalamanın sabit olması ve gecikmeli iki zaman periyodundaki
+değişkenlerin kovaryansının değişkenler arasındaki gecikmeye bağlı olup,
+zamana bağlı olmamasıdır.
+
+\subsection{Grafik Yorumu}\label{grafik-yorumu}
+
+\subsubsection{Otokorelasyon Katsayısı
+(ACF)}\label{otokorelasyon-katsayux131sux131-acf}
+
+Otokorelasyon katsayısı, zaman serisiyle bu serinin gecikmeli serileri
+arasındaki ilişkiyi gösterir.Serideki bütün gecikmeler otokorelasyon
+fonksiyonunu oluşturmaktadır. Otokorelasyona; ihmal edilen değişkenler,
+modelin fonksiyonel biçiminin doğru belirlenmemesi, verilerle ilgili
+ölçme hataları, tesadüfi olarak ortaya çıkan savaş, kuraklık gibi
+olayların, etkilerini ortaya çıktıkları dönemlerden sonra da sürdürmesi
+neden olabilirler.
+
+\[ E(u_{i},u_{j})=0 i≠j \]
+
+şeklinde ifade edilir.
+\[  ACF(k) = \frac{\sum_{t=1+k}^T (Y_{t}- Y^-)(Y_{t-k}- Y^-)}{\sum_{t=1}^T (Y_{t}- Y^-)^2 }  \]
+
+Eğer bir seri tesadüfi ise, her hangi bir gecikmede yani \(Y_{t}\) ve
+\(Y_{t-k}\) arasındaki otokorelasyonlar sıfıra yakın olmaktadır. Bu
+durumda zaman serisinin ardışık değerlerinin birbirleriyle ilişkisi
+yoktur.
+
+Eğer bir zaman serisi trende sahipse ise, \(Y_{t}\) ve \(Y_{t-1}\)
+arasında yüksek korelasyon bulunacaktır. Birkaç gecikmeden sonra
+otokorelasyon katsayıları hızlıca sıfıra yaklaşacaktır. İlk gecikmede
+otokorelasyon kat sayısı 1'e yakındır. İkinci gecikmede de oldukça
+yüksektir. Ve daha sonra hızlıca azalır.
+
+Hata terimleri arasında bir ilişki varsa yani otokorelasyon durumu söz
+konusu ise \[ E(u_{i},u_{j})≠0, i≠j \]
+
+şeklinde ifade edilir.
+
+\subsubsection{Kısmi Otokorelasyon Fonksiyonu (PACF
+)}\label{kux131smi-otokorelasyon-fonksiyonu-pacf}
+
+Kısmi korelesyon; ilk başta bilinemeyen zaman serisinin değerleri olan p
+ve q değerlerinin kaçıncı dereceden olduğunu bulmak için uygulanır.Kısmi
+korelasyon, gecikmeli değişkenler arasındaki ilişkiyi ifade eder.Yani
+kısmi korelasyon diğer bütün gecikmeli gözlemlerin etkisinden
+arındırıldıktan sonra \(x_{t}\) değişkeni ile bu değişkenden herhangi
+bir k-gecikmesiyle elde edilen \(x_{t+k}\) değişkeni arasındaki ilişkiyi
+inceler. Kısmi korelasyon PACF ile gösterilir.
+
+\subsection{Otokorelasyon Testleri}\label{otokorelasyon-testleri}
+
+\subsubsection{Durbin- Watson d Testi}\label{durbin--watson-d-testi}
+
+Sabit parametresi olan modellerde 1.dereceden otokorelasyonun varligini
+test etmek icin kullanilir.
+
+Testin 4 aşamaması vardır. Sırasıyla incelersek ; - Hipotezin kurulması
+
+\(H_{0}\): p=0 ise otokorelasyon yoktur. \(H_{1}\): p≠0 ise
+otokorelasyon vardır.
+
+\begin{itemize}
+\tightlist
+\item
+  Tablo değerlerinin incelenmesi
+\end{itemize}
+
+Durbin Watson tablo değerlerinden d istatisliğinin ;seçilen bir
+anlamlılık düzeyi ile gözlem sayısı ve açıklayıcı değişken sayısına göre
+alt (\(d_{l}\)) ve üst (\(d_{u}\)) sınır değerleri bulunur.
+
+\begin{itemize}
+\tightlist
+\item
+  Durbin Watson d istatistiği hesaplanması
+\end{itemize}
+
+\[  d = \frac{\sum_{t=1}^n (e_{t} -e_{t-1})^2}{\sum_{e=1}^n (e_{t})^2 } \]
+
+\begin{itemize}
+\tightlist
+\item
+  Karşılaştırma yapılması ve karar verilmesi
+\end{itemize}
+
+Eğer  0\textless{}d \textless{} \(d_{L}\)  ise pozitif otokorelasyon
+vardır.
+
+Eğer \(d_{L}\) ≤ d ≤ \(d_{u}\)  ise karar verilmemektedir.
+
+Eğer \(d_{u}\) \textless{} d \textless{}4-\(d_{u}\) ise otokorelasyon
+yoktur.
+
+Eğer  4- \(d_{u}\) ≤ d ≤4- \(d_{L}\)  ise karar verilmemektedir.
+
+Eğer  4- \(d_{L}\)  \textless{}d \textless{}4 ise negatif
+otokorelasyon vardır.
+
+Durbin-Watson testini : - Model sabit terimsiz ise, - Bağımsız X
+değişkenleri stokastikse, - Otokorelasyonun derecesi 1'den büyük ise, -
+Zaman serisinde ara yıllar noksan ise, - Modelde bağımsız değişken
+olarak gecikmeli bağımlı değişken varsa uygulanamaz.
+
+Durbin-Watson d istatistiği tablosu \(n<15\) için \(d_{L}\) ve \(d_{u}\)
+değerlerini vermemektedir. Bu durumda, Von-Neumann testi
+kullanılmaktadır.
+
+\subsubsection{Wellis Testi:}\label{wellis-testi}
+
+3'er aylik verilerde 4.dereceden otokorelasyon varligini test etmek icin
+kullanilir. Durbin Watson testinin, 4.dereceden otokorelasyon varligini
+test etmek icin duzenlenmis halidir.
+
+\subsubsection{Breush ve Godfrey Testi:}\label{breush-ve-godfrey-testi}
+
+Yuksek dereceden otokorelasyonun varliginin test edilmesi icin
+kullanilir.Orjinal denklemde bagimli degiskenin gecikmeli halinin
+bagimsiz degiskenler arasinda yer almasi durumunda da kullanilir.
+
+Bagimli degisken: Orjinal model kalintilari
+
+Bagimsiz degiskenler: Orjinal modelin aciklayici degiskenleri ve
+incelenen otokorelasyonun derecesi sayisinda gecikme katsayisi modelde
+yer alir.
+
+Örneğin 2.dereceden otokorelasyonun varligi arastiriliyorsa, orjinal
+modelin bagimsiz degiskenleri ve \[ u\cdot (t-1), u\cdot (t-2) \]
+katsayilari yeni modelde bagimsiz degiskenler arasinda yer alir. Test
+istatistigi: \[ n \cdot R{_2} \] ile yeni modelin karesi hesaplanir, n
+ile carpilarak test istatistigi elde edilir.
+\pagebreak
+    \section{Giriş}\label{giriux15f}
+
+Bitirme çalışmasında toplamsal ve çarpımsal ayrışma modellerini analiz
+etmek ve modeller için öngörüde bulunabilmek için iki farklı veri
+inceleyeceğiz. İlk verimiz ABD de kullanılan doğal gaz tüketimi hakkında
+olup çarpımsal ayrışma modele örnektir.İkinci verimiz Florida'daki ham
+petrolün üretimi hakkında olup toplamsal ayrışma modeline örnektir.
+Verilerin hangi modele ait olduğu ve öngörü analizleri aşağıda detaylı
+olarak inceleyeceğiz.
+
+\section{Natural Gas Futures}\label{natural-gas-futures}
+
+Verinin Yayıncısı: U.S. Energy Information Administration Data
+
+ABD ulusal ve devlet verilerinin;elektrik, kömür, doğal gaz ve petrol
+gibi tüm ana enerji ürünleri üzerindeki üretim, tüketim ve diğer
+göstergelere ilişkisini göstermektedir.
+
+Verinin Adı: Natural Gas Futures Contract 3
+
+ABD ulusal ve devlet verilerinin;doğal gaz üretim, tüketim ve diğer
+göstergelere ilişkisini göstermektedir.Veri zaman serisi olarak
+ilerlemektedir.
+
+Verinin Sıklığı: Aylık
+
+Verinin Zaman Aralığı: 31.01.1994- 31.03.2018
+
+Verinin Alındığı Yer: Quandl
+
+Quandl yatırım profesyonellerine hizmet veren finansal, ekonomik ve
+alternatif veriler için bir platformdur.Verileri 500'den fazla
+yayıncıdan sağlar. Quandl'ın verilerine bir API aracılığıyla
+erişilebilir. Bir çok programlama dili için API erişimi (R, Python,
+Matlab, Maple ve Stata) vardır.
+
+Excel eklentisi, stok fiyat bilgisi dahil olmak üzere verilere erişim
+sağlar.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} data\PY{o}{\PYZlt{}\PYZhy{}}Quandl\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{EIA/NG\PYZus{}RNGC3\PYZus{}M\PYZdq{}}\PY{p}{,} api\PYZus{}key\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{BtbwkANCR4aHKBscujRb\PYZdq{}}\PY{p}{,} collapse\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{monthly\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Veriyi quandl veri sitesinden alıyoruz. Veri iki sütundan oluşmaktadır.
+İlk sütun tarih ikinci sütun ise kullanım miktarıdır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} hist\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,}  main\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Natural Gas Futures Contract \PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Aşağıda verimizi çizgizel grafik gösterimini görüyoruz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} plot\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,}type\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{l\PYZdq{}}\PY{p}{,} main\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Natural Gas Futures Contract \PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Decompose - Geleneksel Zaman Serisi Ayrışım
+Yöntemleri}\label{decompose---geleneksel-zaman-serisi-ayrux131ux15fux131m-yuxf6ntemleri}
+
+    Veriyi sezonsal veriden ayırmak için R paketinin decompose fonksiyonunu
+kullanıyoruz. Decompose fonksiyonu ile veri sezonsal etkiden ve trend
+etkisinden arınmaktadır.Veri aylık olduğundan dolayı sıklığı 12 olarak
+alıyoruz.
+
+Ek olarak verinin ayrışma yönteminin, toplamsal ya da çarpımsal olduğunu
+anlamak için type= c("additive") ve type= c("multiplicative") fonksiyonu
+kullanıyoruz.
+
+Dönemsel mevsimselliği incelemek için ise R 'ın figure fonksiyonu
+kullanılmaktadır.
+
+    Aşağıda zaman serisi (ts) verimize toplamsal ayrıştırma tipine decompose
+fonsiyonu uyguluyoruz. Böylelikle verimizdeki sezonsal ve trendsel
+etkiden çıkartmış oluyoruz. Plot fonksiyonu ile yaptığımız modeli
+grafiksel olarak gösteriyoruz. Figure fonksiyonu ile de zaman seriminizn
+12 aylık sezonsal etkisini gösteriyoruz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} additive\PYZus{}model\PY{o}{\PYZlt{}\PYZhy{}}decompose\PY{p}{(}ts\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,}start \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1994}\PY{p}{,} \PY{l+m}{1}\PY{p}{)}\PY{p}{,} end \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2018}\PY{p}{,} \PY{l+m}{3}\PY{p}{)}\PY{p}{,} freq\PY{o}{=}\PY{l+m}{12}\PY{p}{)}\PY{p}{,}type\PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{additive\PYZdq{}}\PY{p}{)}\PY{p}{)}
+        plot\PY{p}{(}additive\PYZus{}model\PY{p}{)}
+        plot\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}figure\PY{p}{,}type\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{b\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Toplamsal ayrışma modelini incelediğimizde trend bileşeninin 1994
+yıllarında düşük seviyelerde olduğunu görüyoruz.Ancak 2000 yılından
+itibaren trend değerleri artmıştır. Trendsel etkiyi incelediğimizde
+2003-2008 arası trend bileşeninin değerleri en yüksel noktalara
+ulaşmıştır.2013'ten itibaren ise trendsel etki giderek azaldığını
+görüyoruz. Sezonsal etkiyi incelersek veri bütün yıllarda aynı sezonsal
+değerleri aldığını görüyoruz.
+
+Figure fonksiyonu ile gelen mevsimsellik etki inclendiğinde veri şubat
+ayında en düşük seviyede, haziran ayında ise en yüksek mevsimsellikten
+etkilendiğini görebiliyoruz.
+
+\pagebreak
+    Aşağıda zaman serisi (ts) verimize çarpımsal ayrıştırma tipine decompose
+fonsiyonu uyguluyoruz. Böylelikle verimizdeki sezonsal ve trendsel
+etkiden çıkartmış oluyoruz. Plot fonksiyonu ile yaptığımız modeli
+grafiksel olarak gösteriyoruz. Figure fonksiyonu ile de zaman seriminizn
+12 aylık sezonsal etkisini gösteriyoruz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} multiplicative\PYZus{}model\PY{o}{\PYZlt{}\PYZhy{}}decompose\PY{p}{(}ts\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} freq\PY{o}{=}\PY{l+m}{12}\PY{p}{)}\PY{p}{,} type\PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{multiplicative\PYZdq{}}\PY{p}{)}\PY{p}{)}
+        plot\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}figure\PY{p}{,} type\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{b\PYZdq{}}\PY{p}{)}
+        plot\PY{p}{(}multiplicative\PYZus{}model\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Çarpımsal ayrışma modelini incelediğimizde trend bileşeninin 1994
+yıllarında düşük seviyelerde olduğunu görüyoruz.Ancak 2000 yılından
+itibaren trend değerleri artmıştır. Trendsel etkiyi incelediğimizde
+2003-2008 arası trend bileşeninin değerleri en yüksel noktalara
+ulaşmıştır.2013'ten itibaren ise trendsel etki giderek azaldığını
+görüyoruz. Sezonsal etkiyi incelersek veri bütün yıllarda aynı sezonsal
+değerleri aldığını görüyoruz. Random değerlerinin sürekli değişiklik
+gösterdiğini görüyoruz.
+
+Figure fonksiyonu ile gelen mevsimsellik etki inclendiğinde veri şubat
+ayında en düşük seviyede, haziran ayında ise en yüksek mevsimsellikten
+etkilendiğini görebiliyoruz.
+
+    Toplumsal ve çarpımsal ayrışma modellerindeen büyük farklılık random
+değerlerinde gözlenmektedir. Toplamsal modelde random değerler -2 ile 4
+arasında seyrederken , çarpımsal modelde ise 0.8 ile 1.4 arasında
+seyretmektedir.
+
+    Toplamsal ve çarpımsal ayrışma model incelendiğinde büyük bir farklılık
+görünmediğinden bu aşamada karar verilememektedir. Bu yüzden ilerleyen
+aşamalarda veriye arima modeli uygulayacağız.
+
+Summary fonksiyonu ile verinin özetini göstermiş olunur.
+
+    Aşağıda asıl verimize, toplamsal ayrıştırma sezonsal ve trendsel etkiden
+ayrılmış verimize, çarpımsal ayrıştırma ile sezonsal ve trendsel etkiden
+ayrılmış verimizin özetlerini görüyoruz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k+kp}{summary}\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}
+        \PY{k+kp}{summary}\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+        \PY{k+kp}{summary}\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.490   2.572   3.669   4.308   5.352  14.178 
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+-1.925256 -0.323617 -0.062930 -0.001936  0.196409  4.021991 
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.7722  0.9172  0.9859  0.9938  1.0545  1.3901 
+    \end{verbatim}
+
+    
+    \subsection{Normallik Testi- Shapiro Wilk
+Test}\label{normallik-testi--shapiro-wilk-test}
+
+Verinin normalliğini kontrol etmek için shapiro.test fonksiyonu
+kullanılmaktadır.P değeri testen ne kadar emin olduğunu göstermektedir.P
+değerinde güven aralığını genelde \%95 olarak alınır, yani p değeri
+0.05'tan küçük ise yaptığımız testen emin olabiliriz. W değeri 1
+değerine ne kadar yakınsa veri normalliğe o derece yakındır.
+
+    Shapiro testini toplumsal ve çarpımsal ayrışma modeline uygulanır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} shapiro.test\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+        shapiro.test\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Shapiro-Wilk normality test
+
+data:  na.omit(additive_model$random)
+W = 0.79155, p-value < 2.2e-16
+
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+
+	Shapiro-Wilk normality test
+
+data:  na.omit(multiplicative_model$random)
+W = 0.96499, p-value = 2.579e-06
+
+    \end{verbatim}
+
+    
+    Toplamsal ve çarpımsal ayrışma modeline uygulanan normallik testi
+incellendiğinde p değerlerinin oldukça küçük, neredeyse 0 yakın olduğunu
+görüyoruz. Yaptığımız iki testte de oldukça eminiz. W değeri
+incelendiğin de ise çarpımsal modelin 1 daha yakın olduğu görülmektedir.
+Verimiz normaldir, diyebiliriz.
+
+    \subsection{Otokorelasyon}\label{otokorelasyon}
+
+Zaman serisiyle bu serinin gecikmeli serileri arasındaki ilişkiyi
+göstermek için R'ın acf ve pacf fonksiyonunu toplamsal ve çarpımsal
+ayrışma modeline uygulanır.
+
+Otokorelasyon fonksiyonu ile durağanlıkta ölçülebilir.Eğer
+ACF(otokorelasyon fonksiyonu) çok yüksek bir değerden başlayıp çok yavaş
+küçülüyorsa, bu seri için durağan değildir diyebiliriz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} acf\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+        acf\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_30_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_30_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Toplamsal ve çarpımsal ayrıştırma modelleri için acf değerlerini
+incelediğimizde iki durumunda durağan halde olduğunu söyleyebiliriz.
+\pagebreak
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} pacf\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+         pacf\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+\pagebreak    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} hist\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_33_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+\pagebreak    
+    \subsection{Durağanlık Analizi}\label{duraux11fanlux131k}
+
+Veride durağanlık durumunu belirlemek için sırasıyla ;Augmented
+Dickey-Fuller Test- Kwiatkowski-Phillips-Schmidt-Shin (KPSS) Test -
+Phillips--Perron Birim Kök Testi uygulanır.
+
+    \subparagraph{Augmented Dickey Fuller
+Test}\label{augmented-dickey-fuller-test}
+
+İlk olarak Augmented Dickey Fuller testini verinin bileşenlerden
+ayrılmamış haline, toplamsal ve çarpımsal ayrışma modellerine sırasıyla
+uyguluyarak verinin durağanlığını kontrol ediyoruz. ADF testini R içinde
+bulunan adf.test fonksiyonu ile elde edebiliriz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} adf.test\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}
+         adf.test\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+         adf.test\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Augmented Dickey-Fuller Test
+
+data:  data[, 2]
+Dickey-Fuller = -2.3992, Lag order = 6, p-value = 0.408
+alternative hypothesis: stationary
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in adf.test(na.omit(additive\_model\$random)):
+"p-value smaller than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	Augmented Dickey-Fuller Test
+
+data:  na.omit(additive_model$random)
+Dickey-Fuller = -8.8024, Lag order = 6, p-value = 0.01
+alternative hypothesis: stationary
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in adf.test(na.omit(multiplicative\_model\$random)):
+"p-value smaller than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	Augmented Dickey-Fuller Test
+
+data:  na.omit(multiplicative_model$random)
+Dickey-Fuller = -8.2717, Lag order = 6, p-value = 0.01
+alternative hypothesis: stationary
+
+    \end{verbatim}
+
+\pagebreak    
+    \subparagraph{Kwiatkowski-Phillips-Schmidt-Shin (KPSS)
+Test}\label{kwiatkowski-phillips-schmidt-shin-kpss-test}
+
+İlk olarak Kwiatkowski-Phillips-Schmidt-Shin (KPSS) Test testini verinin
+bileşenlerden ayrılmamış haline, toplamsal ve çarpımsal ayrışma
+modellerine sırasıyla uyguluyarak verinin durağanlığını kontrol
+ediyoruz. KPSS testini R içinde bulunan kpss.test fonksiyonu ile elde
+edebiliriz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} kpss.test\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} null\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Trend\PYZdq{}}\PY{p}{)}
+         kpss.test\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{,} null\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Trend\PYZdq{}}\PY{p}{)}
+         kpss.test\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{,} null\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Trend\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in kpss.test(data[, 2], null = "Trend"):
+"p-value smaller than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	KPSS Test for Trend Stationarity
+
+data:  data[, 2]
+KPSS Trend = 1.2645, Truncation lag parameter = 3, p-value = 0.01
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in kpss.test(na.omit(additive\_model\$random), null = "Trend"):
+"p-value greater than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	KPSS Test for Trend Stationarity
+
+data:  na.omit(additive_model$random)
+KPSS Trend = 0.0083309, Truncation lag parameter = 3, p-value = 0.1
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in kpss.test(na.omit(multiplicative\_model\$random), null = "Trend"):
+"p-value greater than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	KPSS Test for Trend Stationarity
+
+data:  na.omit(multiplicative_model$random)
+KPSS Trend = 0.010033, Truncation lag parameter = 3, p-value = 0.1
+
+    \end{verbatim}
+
+\pagebreak    
+    \subparagraph{Phillips--Perron Birim Kök
+Testi}\label{phillipsperron-birim-kuxf6k-testi}
+
+Phillips--Perron Birim Kök Testi testini verinin bileşenlerden
+ayrılmamış haline, toplamsal ve çarpımsal ayrışma modellerine sırasıyla
+uyguluyarak verinin durağanlığını kontrol ediyoruz. Phillips--Perron
+Birim Kök testini R içinde bulunan pp.test fonksiyonu ile elde
+edebiliriz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} pp.test\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}
+         pp.test\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+         pp.test\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Phillips-Perron Unit Root Test
+
+data:  data[, 2]
+Dickey-Fuller Z(alpha) = -12.85, Truncation lag parameter = 5, p-value
+= 0.3898
+alternative hypothesis: stationary
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in pp.test(na.omit(additive\_model\$random)):
+"p-value smaller than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	Phillips-Perron Unit Root Test
+
+data:  na.omit(additive_model$random)
+Dickey-Fuller Z(alpha) = -89.666, Truncation lag parameter = 5, p-value
+= 0.01
+alternative hypothesis: stationary
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in pp.test(na.omit(multiplicative\_model\$random)):
+"p-value smaller than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	Phillips-Perron Unit Root Test
+
+data:  na.omit(multiplicative_model$random)
+Dickey-Fuller Z(alpha) = -93.661, Truncation lag parameter = 5, p-value
+= 0.01
+alternative hypothesis: stationary
+
+    \end{verbatim}
+
+    
+    Verinin durağanlığını ölçmek için üç farklı test uyguladık. Bunlar
+adf,kpss ve pp testleridir. ADF ve PP testlerinin sonuçlarına göre
+\(p =0.01 <0.05\) çıkmıştır. Yani yapılan testten oldukça eminiz. Dickey
+Fuller değerleri de oldukça düşüktür. Verimiz için toplamsal ve
+çarpımsal model için durağan diyebiliriz. KPSS testini incelediğimizde
+ise \(p=0.1\) çıkmıştır.
+
+    \subsection{Arima}\label{arima}
+
+    R'da olan auto.arima fonksiyonu ile verinin kalan sezonsal, trend ve
+diğer etkenleri kontrol eder ve onlardan arındırır. Veriye auto.arima
+uygulandığında AIC , BIC ve AICc değerlerinin en düşük olanı analiz için
+daha kabul edilebilir bir değer almaktadır. ARIMA için p,d,q
+fonksiyonları ile verinin karmaşıklığı fark edilir ve en sade , en kolay
+model seçilir.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} auto.arima\PY{p}{(}ts\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+         auto.arima\PY{p}{(}ts\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         auto.arima\PY{p}{(}ts\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Series: ts(data[, 2]) 
+ARIMA(2,1,3) 
+
+Coefficients:
+          ar1     ar2     ma1      ma2      ma3
+      -0.1193  0.8104  0.2938  -0.8454  -0.2725
+s.e.   0.0761  0.0812  0.0869   0.0789   0.0626
+
+sigma^2 estimated as 0.3433:  log likelihood=-255.04
+AIC=522.08   AICc=522.37   BIC=544.12
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+Series: ts(na.omit(additive_model$random)) 
+ARIMA(5,0,1) with zero mean 
+
+Coefficients:
+         ar1     ar2      ar3      ar4      ar5     ma1
+      0.0428  0.4151  -0.1535  -0.1207  -0.2632  0.7428
+s.e.  0.1316  0.1130   0.0631   0.0614   0.0572  0.1276
+
+sigma^2 estimated as 0.2156:  log likelihood=-179.43
+AIC=372.86   AICc=373.27   BIC=398.28
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+Series: ts(na.omit(multiplicative_model$random)) 
+ARIMA(2,0,0) with non-zero mean 
+
+Coefficients:
+         ar1      ar2    mean
+      0.8284  -0.2604  0.9939
+s.e.  0.0576   0.0575  0.0106
+
+sigma^2 estimated as 0.005939:  log likelihood=321.52
+AIC=-635.04   AICc=-634.9   BIC=-620.5
+    \end{verbatim}
+
+    
+    Verinin hiçbir bileşenden ayrılmadığı durumda auto.arima uygulandığında
+p =2 , d= 1 ve q=3 çıkmaktadır. d=1 olması verinin durağan olmadığını
+gösterir.
+
+Verinin toplamsal ayrışma modeline auto.arima uygulandığında p= 5 , d=0
+ve q=1 çıkmaktadır. d=0 veri durağandır.
+
+Verilerde çarpımsal modele auto.arima uygulandığında p= 1 , d=0 ve q=1
+çıkmaktadır. d=0 veri durağandır.
+
+Hangi ayrışma modelini seçmemiz gerektiğine karar vermek için ilk olarak
+p,d,q değerlerini karşılaştırmak gerekmektedir. Verinin durağan modeli
+seçilmesi gerektiğinden hiçbir bileşenden ayrılmadığı model elenir.
+Toplamsal ve çarpımsal model karşılaştırıldığında çarpımsal modelin daha
+basit olduğu görülür. İkinci olarak ( Seçtiğimiz modelin doğruluğundan
+emin olmak için ) auto.arima nın bize vermiş olduğu AIC,AICc ve BIC
+değerlerinin en küçük olanı seçilmesi gerekmektedir. Ayrışma modelleri
+için incelendiğinde çarpımsal modelin daha uygun olduğu görülmektedir. .
+Formülü :
+
+\[ \hat Y_{d_t} =0.5006 Y_{t-1}  E\]
+
+d=0 olduğunda orijinal seri zaten durağandır ve farkının alınmasına da
+gerek yoktur.
+
+    Veride sezonsal etkinin olup olmadığını kontrol etmek için veriden
+hiçbir bileşenin çıkarılmadığı haline auto.arima uygulanır.Bunun için
+arimanın argümanlarından sseasonal.test'ten yararlanılır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} auto.arima\PY{p}{(}ts\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+         auto.arima\PY{p}{(}ts\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)} \PY{p}{,}seasonal.test \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{ocsb\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{ch\PYZdq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Series: ts(data[, 2]) 
+ARIMA(2,1,3) 
+
+Coefficients:
+          ar1     ar2     ma1      ma2      ma3
+      -0.1193  0.8104  0.2938  -0.8454  -0.2725
+s.e.   0.0761  0.0812  0.0869   0.0789   0.0626
+
+sigma^2 estimated as 0.3433:  log likelihood=-255.04
+AIC=522.08   AICc=522.37   BIC=544.12
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+Series: ts(data[, 2]) 
+ARIMA(2,1,3) 
+
+Coefficients:
+          ar1     ar2     ma1      ma2      ma3
+      -0.1193  0.8104  0.2938  -0.8454  -0.2725
+s.e.   0.0761  0.0812  0.0869   0.0789   0.0626
+
+sigma^2 estimated as 0.3433:  log likelihood=-255.04
+AIC=522.08   AICc=522.37   BIC=544.12
+    \end{verbatim}
+
+    
+    Herhangi bir işlem yapılmayan veriye auto.arima ile sezonsal test
+uygulandığında ARIMA modelinde; p,d,q değerlerinde ve AIC , AICc ,BIC
+değerlerinde herhangi bir farklılık görünmemektedir. Bir farklı ifade
+ile veride sezonsal etki bulunmamaktadır.
+
+    Normallik testini seçtiğimiz çarpımsal modele tekrar uygulanır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} white\PYZus{}noise\PY{o}{\PYZlt{}\PYZhy{}}arima\PY{p}{(}ts\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}\PY{p}{,} order\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}\PY{p}{)}
+         shapiro.test\PY{p}{(}white\PYZus{}noise\PY{o}{\PYZdl{}}residuals\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Shapiro-Wilk normality test
+
+data:  white_noise$residuals
+W = 0.97796, p-value = 0.0002546
+
+    \end{verbatim}
+
+    
+    Normallik testine göre p değeri oldukça düşük ve w değeri yüksektir.
+Artık verinin beyaz gürültü olduğunu ve veride herhangi bir bileşen
+kalmadığını söylenebilir.
+
+    \subsection{Zaman Serilerinin Trend Bileşeninden  Arındırılması
+(de-trend)}\label{zaman-serilerinin-trendden-arux131ndux131rux131lmasux131-de-trend}
+
+Lineer trend barındıran zaman serilerini trendden arındırmak için
+genellikle doğrusal regresyonu kullanılmaktadır.Zaman serisine doğrusal
+regresyon uygulanırsa, trend etkisi içinde olmayan zaman serisi elde
+edilir.
+
+Doğrusal regresyon dışında da farklı yöntemler kullanılarak zaman serisi
+verilerini trendlerden arındırılabilmektedir.Örneğin; AR(1), fourier ve
+wavelet dönüşümleri, kalman filtreleri gibi yöntemler kullanılabilir, ya
+da forecast kütüphanesi içerisindeki seasonaldummy ve fourier
+fonksiyonları kullanılarak de-trend yapılabilir.
+
+Model sonucu kalıntılar de-trend edilmiş zaman serisidir.
+
+    Doğrusal regresyon analizini gerçekleştiren lm() fonksiyonu ilk olarak
+bağımlı değişkeni, ardından bağımsız değişkenleri parametre olarak
+almaktadır. Bağımlı değişkenden sonra tilda (\textasciitilde{}) işareti,
+birden fazla bağımsız değişkenimiz varsa değişkenlerin arasına artı (+)
+işareti konulması unutulmamalıdır.
+
+    Verimizi trendsel etkiden arındırmak için hem doğrusal regresyon
+yöntemini hem de 1. derece otoregresif süreç yöntemi uygulanır.
+
+Trendsel etkiden arındırıldıktan sonra normallik testi uygulanarak
+yaptığımız modelin doğruluğundan ve normal olup olmadığına karar
+verebiliriz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} trModel \PY{o}{\PYZlt{}\PYZhy{}} lm\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{o}{\PYZti{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{o}{:}\PY{k+kp}{length}\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         trResid \PY{o}{\PYZlt{}\PYZhy{}} resid\PY{p}{(}trModel\PY{p}{)}
+         
+         trModel\PYZus{}AR1 \PY{o}{\PYZlt{}\PYZhy{}} arima\PY{p}{(}x\PY{o}{=}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} order\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{0}\PY{p}{)}\PY{p}{)}
+         trResid\PYZus{}AR1 \PY{o}{\PYZlt{}\PYZhy{}} resid\PY{p}{(}trModel\PYZus{}AR1\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} par\PY{p}{(}mfrow\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{2}\PY{p}{)}\PY{p}{)}
+         plot\PY{p}{(}trResid\PY{p}{,} type\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{l\PYZdq{}}\PY{p}{,} col\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{blue\PYZdq{}}\PY{p}{,} main\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{de\PYZhy{}trended (regresyon)\PYZdq{}}\PY{p}{)}
+         plot\PY{p}{(}trResid\PYZus{}AR1\PY{p}{,}  type\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{l\PYZdq{}}\PY{p}{,} col\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{red\PYZdq{}}\PY{p}{,} main\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{de\PYZhy{}trended (ar(1))\PYZdq{}}\PY{p}{)}
+         shapiro.test\PY{p}{(}trResid\PY{p}{)}
+         shapiro.test\PY{p}{(}trResid\PYZus{}AR1\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Shapiro-Wilk normality test
+
+data:  trResid
+W = 0.83751, p-value < 2.2e-16
+
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+
+	Shapiro-Wilk normality test
+
+data:  trResid_AR1
+W = 0.82996, p-value < 2.2e-16
+
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_56_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Doğrusal regresyon ve otoregresif süreç karşılaştırıldığında otoregresif
+sürecin daha tutarlı olduğu , doğrusal regresyonun ise sürekli inişli ve
+çıkışlı bir durumda olduğu gözlenmektedir.
+
+Normallik testleri açısından karşılaştırırsak iki sonuçta da p değerinin
+güven aralığını sağladığı yani \(p<0.05\) olduğunu ve w değerinin 1
+yakın olduğunu görmekteyiz. İki trendsel etkiden arındırılmış veri için
+normal denilebilir.
+
+    \subsection{Zaman Serilerinin Mevsimsel Bileşeninden Arındırılması
+(de-seasonalize)}\label{zaman-serilerinin-mevsimsellikten-arux131ndux131rux131lmasux131-de-seasonalize}
+
+Zaman serisinin mevsimsellik deseni hakkında fikir verir ve mevsimsel
+etkiler olmadan verilerin modellenmesine yardımcı olur. Zaman serisini
+mevsimsellikten arındırmak için aşağıdaki iki adım kullanılabilir. 1.
+Adım: stl() fonksiyonu ile zaman serisi ayrılır. 2. Adım: forecast
+kütüphanesi içerisindeki seasadj() fonksiyonu kullanılır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} datastl\PY{o}{\PYZlt{}\PYZhy{}} stl\PY{p}{(}ts\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} freq\PY{o}{=}\PY{l+m}{12}\PY{p}{)}\PY{p}{,} s.window\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{periodic\PYZdq{}}\PY{p}{)}
+         plot\PY{p}{(}datastl\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_59_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} ts\PYZus{}sa \PY{o}{\PYZlt{}\PYZhy{}} seasadj\PY{p}{(}datastl\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} par\PY{p}{(}mfrow\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{3}\PY{p}{,}\PY{l+m}{2}\PY{p}{)}\PY{p}{)}
+         plot\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} type\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{l\PYZdq{}}\PY{p}{,} main\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Real\PYZdq{}}\PY{p}{)}  
+         plot\PY{p}{(}ts\PYZus{}sa\PY{p}{,} type\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{l\PYZdq{}}\PY{p}{,} main\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Seasonal Adjusted\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+\pagebreak  
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_61_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+ 
+    Normallik testini ölçmek için sezonsal etkisi çıkarılmış veriye
+shapiro.test uygulanır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} shapiro.test\PY{p}{(}ts\PYZus{}sa\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Shapiro-Wilk normality test
+
+data:  ts_sa
+W = 0.86198, p-value = 1.769e-15
+
+    \end{verbatim}
+
+    
+    Durağanlık testine göre \(p<0.05\) ve w değeri 1'e yakındı.Bu durum için
+yapılan sezonsal testin sonucunda doğruluktan eminiz diyebiliriz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} acf\PY{p}{(}ts\PYZus{}sa\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Otokorelasyon katsayısı incelendiğinde verinin yavaş yavaş azaldığı
+gözlenmektedir. Bu durumda ts\_sa mevsimsel etkiden arındırılmış zaman
+serimizin durağan olmadığını göstermektedir.
+\pagebreak  
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} pacf\PY{p}{(}ts\PYZus{}sa\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_67_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Sezonsal etkiden arındırılan verinin (ts\_sa) , hala sezonsal etki
+içerip içermediğini anlamak (mevsimsellik farkını bulmak) için nsdiffs
+fonksiyonu uygulanır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} nsdiffs\PY{p}{(}ts\PYZus{}sa\PY{p}{)}
+\end{Verbatim}
+
+
+    0
+
+    
+    Mevsimsellik farkı sıfırdır. Mevsimsel etki yoktur.
+\pagebreak
+    \subsection{Natural Gas Futures Zaman Serisi Analizi
+Özet}\label{natural-gas-futures-zaman-serisi-analizi-uxf6zet}
+
+Verinin Adı: Natural Gas Futures Contract 3
+
+Verinin Alındığı Yer: Quandl
+
+Verinin Sıklığı: Aylık
+
+Verinin Zaman Aralığı: 31.01.1994- 31.03.2018
+
+Veride iki sütun bulunmaktadır. Sütunlardan birisi zaman, diğeri ise
+kullanılan değerdir. Amaç zaman serisindeki gözlenen değerlerinin trend,
+mevsimsel, çevresel ve rastgele etkenlerden ayırmak ve doğru modeli
+seçmektir. Bu doğrultuda üç yöntem kullandık.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Yöntem : R'da bulunan decompose fonksiyonu ile seriyi mevsimsel ve
+  trendsel etkenlerden ayırmaktır. Decompose fonksiyonunu zaman
+  serilerin hep toplamına hem de çarpımına ayrı ayrı uyguladık. Daha net
+  sonuç veren veri seçilir.Toplamsal ayrışma modelini incelediğimizde
+  veride trensel etkinin sürekli değiştiğini ve mevsimsel etkinin aynı
+  olduğunu görüyoruz. Çarpımsal model de aynı sonuca varıyoruz. İki
+  ayrıştırma modeli arasındaki fark random bileşende ortaya
+  çıkmaktadır.Ancak kullanılan veride toplanan ve çarpılan veride net
+  bir karar veremiyoruz. Verimizin zaman bileşenlerinden ayırldıktan
+  sonraki normallik durumunu kontrol etmek için veriye normallik
+  testi(shapiro.test )uyguladık, iki modelin de p değerleri güven
+  aralığında (\(p<0.05\) ) çıktı. Sonuç olarak iki model içinde
+  verimizin bileşenlerden ayrılmış haline normal diyebiliriz. Zaman
+  bileşenlerinden ayrılmış olan verimizin durağanlığını kontrol etmek
+  için adf,kpss ve pp testlerini uyguladık. Üç testin sonucu da
+  verimizin toplamsal ve çarpımsal model için durağan olduğunu gösterdi.
+  Sonraki aşamalarda decompose fonksiyonu ile veremediğimiz hangi
+  modelin uygun olduğu kararını anlamak için arima testini uyguladık.
+  Arima ile gelen p,q,d değerlerinden en basit olanını ve AIC, AICc ve
+  BIC değerlerinden en düşük olanını yani çarpımsal modelin daha uygun
+  olduğuna karar verdik. Ek olarak herhangi bir bileşenden ayrılmamış
+  veriye arima ile sezonsal etkinin olup olmadığını ölçtük. Sonucunda
+  ise herhangi bir farklılık olmadığını yani verimizde sezonsal bir
+  etkinin olmadığını söyleyebiliriz. Decompose ve sonrasında uygulanan
+  auto.arima ile kalan verimize normallik testini tekrar uygularsak
+  güven aralığını sağladığını (\( p=0.0002966 \textless{}0.05 \)) ve w=
+ 0.97827 yani 1 oldukça yakın olduğunu görüyoruz. Bu da verimizin
+  normal olduğunu söyler. Ek olarak artık verimize beyaz gürültü verisi
+  diyebiliriz.
+\item
+  Yöntem : Zaman serisini trend bileşenlerinden ayırmak için doğrısal
+  regresyon ve AR(1) modelini kullandık. Verilerin trendsel etkisinden
+  ayrıldığı durumda normallik değerlerini ölçmek için her iki (Doğrusal
+  regresyon,AR(1)) süreç için güven aralığını ( \(p=2.2e-16
+  \textless{}0.05 \) ve w=0.83..) sağladığını gördük.
+\item
+  Yöntem :Zaman serisini mevsimsel bileşenlerinden ayırmak için R'da
+  bulunan stl fonksiyonunu kullandık. Verilerin mevsimsel etkisinden
+  ayrıldığı durumda normallik değerlerini ölçmek için normallik
+  (shapiro.test) testini uyguladık. Güven aralığını ( \(p=2.098e-15
+  \textless{}0.05 \) ve w=0.86274) sağladığını gördük.Ancak mevsimsellik
+  etkisinden arındırılmış veri için acf testi uygulandığında verinin
+  yavaş yavaş azaldığı gözlenmektedir. Bu durum için verinin normal
+  olmadığı söylenmektedir.
+\end{enumerate}
+
+Ek olarak uyguladığımız nsdiffs fonksiyonu ile birlikte verinin
+mevsimsel etki içerip içermediğine, ya da kalıp kalmadığına karar
+verilmektedir. Fonksiyonu uyguladığımızda görülüyor ki veri mevsimsel
+bileşen içermemektedir.
+
+Yukarıdaki üç yöntemi karşılatırdığımızda (normalliklerini) kullanmamız
+gereken modelin çarpımsal ve kullanmamız gereken yöntemin sırasıyla
+decompose ve arima olmasına karar verdik.
+
+    \subsection{Forecast}\label{forecast}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{k+kn}{require}\PY{p}{(}forecast\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Üstel Düzleştirme -Exponential
+Smooting}\label{uxfcssel-duxfczguxfcnleux15ftirme--exponential-smooting}
+
+Verideki son değişim ve sıçramaları incelenerek tahminlerin ya da
+öngörülerin devamlı olarak güncelleştirildiği bir yöntemdir.
+Deterministik ve stokastik trende sahip olan tüm serilere
+uygulanabilmektedir. Üstel düzleştirme yönteminde gelecek dönemin (t+1
+döneminin) tahminin hesabında son döneme ait tahmin ile bu tahminden
+elde edilen hatanın bir kısmı kullanılmaktadır.
+\[ Y_{t+1}= Y_{t}+ a(e_{t}) \] ile ifade edilir.
+
+\[ S_{t}= S_{t-1}+ a(Y_{t}-S_{t-1} ) \] \(S_{t}\): Bir sonraki (gelecek)
+dönemin, yani (t+1)'inci dönemin tahmini
+
+\(S_{t-1}\): Son döneme ait tahmin ( bu tahmin (t-1)'inci dönemde
+yapılır.
+
+\(Y_{t}\): Son döneme ait gerçek değer
+
+a: Düzleştirme katsayısı yada ağırlık \(0<a<1\)
+
+\(Y_{t}-S_{t-1}\): Son döneme ait tahmin hatası
+
+\[ Y_{t+1}= S_{t}= a(Y_{t+1})+ (1-a)S_{t-1}\]
+
+Gelecek dönemin tahmini=ağırlık.(son dönemin gözlem
+değeri)+(1-ağırlık).(son döneme ait tahmin) Genel terimini yazmak
+istenirse:\\
+\[ \hat Y_{t+1} = S_{t} = a \sum_{i=1}^t (1-a)^i \cdot Y_{t-i}  \]
+
+Üstel düzleştirme yöntemi uyguladığımızda trend ve mevsimsel
+bileşenler için toplamda 15 metot vardır. - Trendsel Bileşen : N(None)
+- A(Additive)- \(A_{d}\) (Additive Damped) - M(Multiplicative) -
+\(M_{d}\) (Multiplicative Damped) - Sezonsal Bileşen: N(None) -
+A(Additive)- M(Multiplicative)
+
+ETS ile gelen metodta Ets(error, trend , seasonal ) sonuçları elde
+edilir.Örnek olarak birkaç model incelenirse:
+
+ETS(A,A,A) : Holt-Winters' metodunun toplamsal ayrışması ve toplamsal
+ayrışmadaki hatalar yöntemi
+
+ETS(M,A,M) : Holt-Winters' metodunun çarpımsal ayrışması ve çarpımsal
+ayrışmadaki hatalar yöntemi
+
+ETS(A,\(A_{d}\), N) : Toplamsal hata ve sönümlü trendsel etki içerip ,
+sezonsal etki içermeyen yöntem
+
+Üssel düzgünleştirme de 2 farklı yöntem vardır. Bu iki yöntem için de R
+da bulunan fonksiyonlar kullanılır. - ets() fonksiyonu - HoltWinters()
+fonkisyonu
+
+    İlk olarak verimizin zaman serisi olduğunu gösteriyoruz. Zaman serisi
+sıklığını aylık olarak tanımlıyoruz. Zaman aralığımızı 01.1994 - 12.2017
+kadar olan süreyi alıyoruz. 01.2018-03.2018 süresini de test verisi
+olarak alıyoruz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} time\PYZus{}series \PY{o}{\PYZlt{}\PYZhy{}}ts\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} start\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1994}\PY{p}{,} \PY{l+m}{1}\PY{p}{)}\PY{p}{,} end\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2017}\PY{p}{,} \PY{l+m}{12}\PY{p}{)}\PY{p}{,} freq\PY{o}{=}\PY{l+m}{12}\PY{p}{)}
+         plot\PY{p}{(}time\PYZus{}series\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_76_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Aşağıda üstel düzleştirme yönteminin ets() fonksiyonu kullanılmış
+halini uygulayacağız.
+\subsubsection{Öngörü Doğruluğunu Hesaplama - Accuracy Fonksiyonu}
+
+Öngörü doğruluğunu hesaplamak için R'ın accuracy
+fonksiyonunu kullanılır. Accuracy fonksiyonu ile gelen verilerde:
+
+ME:Ortalama Hata \[  ME = 1/n \sum_{t=1}^n e_{t}  \]\\
+Bu sonucun dezavantajı,Pozitif ve negatif hata değerlerinin birbirini
+iptal edebileceğidir, bu yüzden bu ölçü genel uyumun çok iyi bir
+göstergesi değildir.
+
+MAE : Ortalama Mutlak Hata \[  MAE = 1/n \sum_{t=1}^n |e_{t}|  \]\\
+Bu değer 0 ise, uyum (tahmin) mükemmeldir. Ortalama karesel hata
+değerine kıyasla, bu uyum ölçüsü aykırı değerleri "vurgulamak", yani
+benzersiz veya nadir büyük hata değerleri MAE'yi MSE değerinden daha az
+etkileyecektir.
+
+MSE: Ortalama Hata Kare \[  MSE = 1/n \sum_{t=1}^n e_{t}^2  \]\\
+MPE: Ortalama Yüzde Hata \[  MPE = 1/n \sum_{t=1}^n PE_{t}  \] Bu değer
+PE değerlerinin ortalaması olarak hesaplanır.
+
+MAPE: Ortalama Mutlak Yüzde Hata \[  MAPE = 1/n \sum_{t=1}^n |PE_{t}| \]
+
+\(e_{t}\) : t dönemindeki hata
+
+\(PE_{t}\) : t dönemindeki yüzde hata
+
+\(PE_{t}= [(Y_{t}-F_{t})/Y_{t}]\cdot 100\)
+
+n: dönem sayısı
+
+    Öngörü uygulandığında çıkan değerlerde 80 ve 95 güven aralığını belli
+etmektedir. Gri olan bölgeler öngörüden \%95 emin olduğumuzu , mavi
+bölge ise öngörüden \%80 emin olduğumuzu göstermektedir.
+
+    Öngörü modellerinden ilk olarak ets modelini deniyoruz. Test modülümüzü
+2018.01 ve 2018.03 arasına uyguluyoruz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} model11 \PY{o}{\PYZlt{}\PYZhy{}}ets\PY{p}{(}time\PYZus{}series\PY{p}{)}
+         data\PYZus{}forecast\PYZus{}ets \PY{o}{\PYZlt{}\PYZhy{}} forecast\PY{p}{(}model11\PY{p}{,} h\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}ets\PY{p}{)}
+         plot\PY{p}{(}data\PYZus{}forecast\PYZus{}ets\PY{p}{,} \PY{p}{,}xlim\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2018.1}\PY{p}{,}\PY{l+m}{2018.3}\PY{p}{)}\PY{p}{)}
+         data\PYZus{}forecast\PYZus{}ets
+\end{Verbatim}
+
+
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & -0.001786263 & 0.5867771    & 0.3525912    & -0.490289    & 7.254289     & 0.2780497    & 0.1595532   \\
+\end{tabular}
+
+
+    
+    
+    \begin{verbatim}
+         Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+Jan 2018       1.974613 1.739441 2.209785 1.614948 2.334278
+Feb 2018       1.846689 1.522929 2.170450 1.351541 2.341838
+Mar 2018       1.787294 1.397092 2.177495 1.190532 2.384055
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_80_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Verimize ets() fonksiyonu ile öngörü hesapladığımızda bize
+ETS(M,\(A_{d}\),M) argümanlarını vermiştir. Bu da verimizide 
+çarpımsal hatanın, sönümlü trendin ve çarpımsal mevsimsel etkinin sahip
+olduğunu gösteriyor. Çıkan sonuçları orjinal değerler ile
+karşılaştırıldığında :
+
+Orjinal değerler:
+
+\begin{itemize}
+\tightlist
+\item
+  2018.03 2.784
+\item
+  2018.02 2.695
+\item
+  2018.01 2.800
+\end{itemize}
+
+Öngörü hesabındaki güven aralığı \%95 olan noktalardaki sonuçlar ise:
+
+\begin{itemize}
+\tightlist
+\item
+  2018.03 2.660738
+\item
+  2018.02 2.514919
+\item
+  2018.01 2.431952
+\end{itemize}
+
+olarak hesaplanmıştır. İki değer arasındaki farklar incelenirse : -
+2018.03 0.089 - 2018.02 0.18001 - 2018.01 o.368048
+
+olarak hesaplanmıştır.
+
+    Düşük bir aplha değeri, geçmiş ortalamaya daha fazla ağırlık verir ve
+rassal dalgalanmaların etkisini azaltır. Yüksek alpha değeri ise
+talepteki değişikliklere daha fazla tepki verilmesini sağlar.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{k+kp}{summary}\PY{p}{(}data\PYZus{}forecast\PYZus{}ets\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Forecast method: ETS(M,Ad,A)
+
+Model Information:
+ETS(M,Ad,A) 
+
+Call:
+ ets(y = time\_series) 
+
+  Smoothing parameters:
+    alpha = 0.9999 
+    beta  = 0.0066 
+    gamma = 1e-04 
+    phi   = 0.9255 
+
+  Initial states:
+    l = 2.6888 
+    b = -0.0089 
+    s=0.0223 0.045 -0.051 0.0241 0.1746 0.2976
+           0.1571 -0.0229 -0.2054 -0.2297 -0.1699 -0.0417
+
+  sigma:  0.0929
+
+     AIC     AICc      BIC 
+1071.518 1074.061 1137.452 
+
+Error measures:
+                       ME      RMSE       MAE       MPE     MAPE      MASE
+Training set -0.001786263 0.5867771 0.3525912 -0.490289 7.254289 0.2780497
+                  ACF1
+Training set 0.1595532
+
+Forecasts:
+         Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+Jan 2018       1.974613 1.739441 2.209785 1.614948 2.334278
+Feb 2018       1.846689 1.522929 2.170450 1.351541 2.341838
+Mar 2018       1.787294 1.397092 2.177495 1.190532 2.384055
+
+    \end{Verbatim}
+
+    ETS(M,\(A_{d}\), M) için alpha değeri 0.988 çıkmıştır. Bu da 
+talepteki değişikliklere daha fazla tepki vereceğini söylemektedir.
+
+    \subsubsection{Basit Üstel Düzleştirme Yöntemi (Durağan Seriler için):}\label{basit-uxfcssel-duxfczguxfcnleux15ftirme-yuxf6ntemi-duraux11fan-seriler-iuxe7in}
+
+Bu yöntem trende ve mevsimsel dalgalanmaya sahip olmayan sadece bir
+ortalama düzey etrafında hareket eden serilerin analizinde
+uygulanmaktadır. Bu yöntemde serinin tahminin elde edilebilmesi için
+aşağıdaki formülden yararlanılmaktadır.
+
+Düzleştirme katsayısı(aplha- a) tahmin hatasını en küçük yapan sabit bir
+değerdir. Düzleştirme katsayısı (alpha )1 değerine yakın ise son
+gözlemlerin değerleri doğrudan serinin tahminini etkiler ve bu durum
+tahmin serisinde aşırı sıçramalara neden olabilir. Düzleştirme
+katsayısının 0 değerine yakın olması durumunda orijinal serideki
+değişimler tahmin serisini pek etkileyemez. Tahmin serisindeki ilk
+verilerle son veriler arasında önemli bir fark olmaz. Bu iki durum da
+tahminlerin güvenilir olması bakımından istenilen bir özellik değildir.
+
+    Aşağıda üstel düzleştirme yönteminin HoltWinters() fonksiyonu
+kullanılmış halini uygulayacağız.Bu model trend, sezonsal bileşenleri de
+içermemediği durumdur.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} model12 \PY{o}{\PYZlt{}\PYZhy{}}HoltWinters\PY{p}{(}time\PYZus{}series\PY{p}{,} beta\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{,} gamma\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+         model12
+         data\PYZus{}forecast\PYZus{}simple \PY{o}{\PYZlt{}\PYZhy{}} forecast\PY{p}{(}model12\PY{p}{,} h\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}simple\PY{p}{)}
+         plot\PY{p}{(}data\PYZus{}forecast\PYZus{}simple\PY{p}{,} \PY{p}{,}xlim\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2018.1}\PY{p}{,}\PY{l+m}{2018.3}\PY{p}{)}\PY{p}{)}
+         data\PYZus{}forecast\PYZus{}simple
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Holt-Winters exponential smoothing without trend and without seasonal component.
+
+Call:
+HoltWinters(x = time_series, beta = FALSE, gamma = FALSE)
+
+Smoothing parameters:
+ alpha: 0.9999286
+ beta : FALSE
+ gamma: FALSE
+
+Coefficients:
+      [,1]
+a 2.038008
+    \end{verbatim}
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & -0.002665668 & 0.6110392    & 0.3739591    & -0.6182691   & 7.84757      & 0.2949002    & 0.1759845   \\
+\end{tabular}
+
+
+    
+    
+    \begin{verbatim}
+         Point Forecast     Lo 80    Hi 80      Lo 95    Hi 95
+Jan 2018       2.038008 1.2535693 2.822447  0.8383126 3.237703
+Feb 2018       2.038008 0.9286838 3.147332  0.3414431 3.734573
+Mar 2018       2.038008 0.6793851 3.396631 -0.0398264 4.115842
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_87_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{k+kp}{summary}\PY{p}{(}data\PYZus{}forecast\PYZus{}simple\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Forecast method: HoltWinters
+
+Model Information:
+Holt-Winters exponential smoothing without trend and without seasonal component.
+
+Call:
+HoltWinters(x = time\_series, beta = FALSE, gamma = FALSE)
+
+Smoothing parameters:
+ alpha: 0.9999286
+ beta : FALSE
+ gamma: FALSE
+
+Coefficients:
+      [,1]
+a 2.038008
+
+Error measures:
+                       ME      RMSE       MAE        MPE    MAPE      MASE
+Training set -0.002665668 0.6110392 0.3739591 -0.6182691 7.84757 0.2949002
+                  ACF1
+Training set 0.1759845
+
+Forecasts:
+         Point Forecast     Lo 80    Hi 80      Lo 95    Hi 95
+Jan 2018       2.038008 1.2535693 2.822447  0.8383126 3.237703
+Feb 2018       2.038008 0.9286838 3.147332  0.3414431 3.734573
+Mar 2018       2.038008 0.6793851 3.396631 -0.0398264 4.115842
+
+    \end{Verbatim}
+
+    Düzleştirme katsayı değeri arttıkça daha büyük tahmin farklılıkları
+oluşmaktadır. Basit üstel düzleştirme yöntemi uyguladığımızda gelen
+alpha değeri 0.9999435'dir. Bu sonuçta 1'e çok yakın ve değerin çok
+büyük olduğunu, bileşenlere yüksek tepki vereceğini gösterir. Hata oranı
+fazladır. O yüzden öngörü yaparken bu model seçilmemelidir.
+
+    \subsubsection{Holt ÜsteL Düzleştirme Yöntemi: (Doğrusal Trendi Olan Seriler için)}\label{holt-uxfcstel-duxfczleux15ftirme-yuxf6ntemi-doux11frusal-trendi-olan-seriler-iuxe7in}
+
+Trende sahip mevsimsel dalgalanması olmayan serilerin tahmin işleminde
+Holt üstel düzleştirme yöntemi kullanılmaktadır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} model13 \PY{o}{\PYZlt{}\PYZhy{}}HoltWinters\PY{p}{(}time\PYZus{}series\PY{p}{,} gamma\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+         model13
+         data\PYZus{}forecast\PYZus{}holt \PY{o}{\PYZlt{}\PYZhy{}} forecast\PY{p}{(}model13\PY{p}{,} h\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}holt\PY{p}{)}
+         plot\PY{p}{(}data\PYZus{}forecast\PYZus{}holt\PY{p}{,} \PY{p}{,}xlim\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2018.1}\PY{p}{,}\PY{l+m}{2018.3}\PY{p}{)}\PY{p}{)}
+         data\PYZus{}forecast\PYZus{}holt
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Holt-Winters exponential smoothing with trend and without seasonal component.
+
+Call:
+HoltWinters(x = time_series, gamma = FALSE)
+
+Smoothing parameters:
+ alpha: 1
+ beta : 0
+ gamma: FALSE
+
+Coefficients:
+    [,1]
+a  2.038
+b -0.019
+    \end{verbatim}
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & 0.01639161  & 0.6123117   & 0.3755175   & -0.06358456 & 7.867708    & 0.2961291   & 0.1759017  \\
+\end{tabular}
+
+
+    
+    
+    \begin{verbatim}
+         Point Forecast     Lo 80    Hi 80      Lo 95    Hi 95
+Jan 2018          2.019 1.2331972 2.804803  0.8172183 3.220782
+Feb 2018          2.000 0.8887070 3.111293  0.3004241 3.699576
+Mar 2018          1.981 0.6199496 3.342050 -0.1005469 4.062547
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_91_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{k+kp}{summary}\PY{p}{(}data\PYZus{}forecast\PYZus{}holt\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Forecast method: HoltWinters
+
+Model Information:
+Holt-Winters exponential smoothing with trend and without seasonal component.
+
+Call:
+HoltWinters(x = time\_series, gamma = FALSE)
+
+Smoothing parameters:
+ alpha: 1
+ beta : 0
+ gamma: FALSE
+
+Coefficients:
+    [,1]
+a  2.038
+b -0.019
+
+Error measures:
+                     ME      RMSE       MAE         MPE     MAPE      MASE
+Training set 0.01639161 0.6123117 0.3755175 -0.06358456 7.867708 0.2961291
+                  ACF1
+Training set 0.1759017
+
+Forecasts:
+         Point Forecast     Lo 80    Hi 80      Lo 95    Hi 95
+Jan 2018          2.019 1.2331972 2.804803  0.8172183 3.220782
+Feb 2018          2.000 0.8887070 3.111293  0.3004241 3.699576
+Mar 2018          1.981 0.6199496 3.342050 -0.1005469 4.062547
+
+    \end{Verbatim}
+
+    Düzleştirme katsayı değeri arttıkça daha büyük tahmin farklılıkları
+oluşmaktadır. Basit üstel düzleştirme yöntemi uyguladığımızda gelen
+alpha değeri 1'dir. Bu sonuçta değerin çok büyük olduğunu gösterir. Hata
+oranı fazladır. O yüzden öngörü yaparken bu model seçilmemelidir.
+
+    \subsubsection{Holt-Winters Yöntemi: (Doğrusal Trendi ve Mevsimlik Etkileri
+Olan Seriler
+İçin)}\label{holt-winters-yuxf6ntemi-doux11frusal-trendi-ve-mevsimlik-etkileri-olan-seriler-iuxe7in}
+
+Holt-Winters Yöntemi üç temel düzeltme esitligine sahiptir. Temel, trend
+ve mevsimsellik için olan bu üç düzeltme sabiti ile yapılan düzeltmeler,
+Holt'un Dogrusal Yöntemi'ne benzer olarak tek toplam esitlikte
+toplanarak mevsimsellik esitligi elde etmektedir.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} model14 \PY{o}{\PYZlt{}\PYZhy{}}HoltWinters\PY{p}{(}time\PYZus{}series\PY{p}{)}
+         model14
+         data\PYZus{}forecast\PYZus{}holtWinter \PY{o}{\PYZlt{}\PYZhy{}} forecast\PY{p}{(}model14\PY{p}{,} h\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}holtWinter\PY{p}{)}
+         plot\PY{p}{(}data\PYZus{}forecast\PYZus{}holtWinter\PY{p}{,} \PY{p}{,}xlim\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2018.1}\PY{p}{,}\PY{l+m}{2018.3}\PY{p}{)}\PY{p}{)}
+         data\PYZus{}forecast\PYZus{}holtWinter
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Holt-Winters exponential smoothing with trend and additive seasonal component.
+
+Call:
+HoltWinters(x = time_series)
+
+Smoothing parameters:
+ alpha: 1
+ beta : 0
+ gamma: 0
+
+Coefficients:
+           [,1]
+a    1.93268403
+b    0.01312719
+s1   0.09744097
+s2  -0.11518403
+s3  -0.18280903
+s4   0.05598264
+s5   0.32977431
+s6  -0.11422569
+s7   0.14994097
+s8   0.13856597
+s9  -0.09776736
+s10 -0.16885069
+s11 -0.19818403
+s12  0.10531597
+    \end{verbatim}
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & -0.01718173 & 0.6298921   & 0.3989148   & -1.049968   & 8.759911    & 0.31458     & 0.1432632  \\
+\end{tabular}
+
+
+    
+    
+    \begin{verbatim}
+         Point Forecast     Lo 80    Hi 80       Lo 95    Hi 95
+Jan 2018       2.043252 1.2348476 2.851657  0.80690399 3.279600
+Feb 2018       1.843754 0.7004976 2.987011  0.09529398 3.592215
+Mar 2018       1.789257 0.3890587 3.189454 -0.35216134 3.930674
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_95_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Düzleştirme katsayı değeri arttıkça daha büyük tahmin farklılıkları
+oluşmaktadır. Basit üstel düzleştirme yöntemi uyguladığımızda gelen
+alpha değeri 1'dir. Bu sonuçta değerin çok büyük olduğunu gösterir. Hata
+oranı fazladır. O yüzden öngörü yaparken bu model seçilmemelidir.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{k+kp}{summary}\PY{p}{(}data\PYZus{}forecast\PYZus{}holtWinter\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Forecast method: HoltWinters
+
+Model Information:
+Holt-Winters exponential smoothing with trend and additive seasonal component.
+
+Call:
+HoltWinters(x = time\_series)
+
+Smoothing parameters:
+ alpha: 1
+ beta : 0
+ gamma: 0
+
+Coefficients:
+           [,1]
+a    1.93268403
+b    0.01312719
+s1   0.09744097
+s2  -0.11518403
+s3  -0.18280903
+s4   0.05598264
+s5   0.32977431
+s6  -0.11422569
+s7   0.14994097
+s8   0.13856597
+s9  -0.09776736
+s10 -0.16885069
+s11 -0.19818403
+s12  0.10531597
+
+Error measures:
+                      ME      RMSE       MAE       MPE     MAPE    MASE
+Training set -0.01718173 0.6298921 0.3989148 -1.049968 8.759911 0.31458
+                  ACF1
+Training set 0.1432632
+
+Forecasts:
+         Point Forecast     Lo 80    Hi 80       Lo 95    Hi 95
+Jan 2018       2.043252 1.2348476 2.851657  0.80690399 3.279600
+Feb 2018       1.843754 0.7004976 2.987011  0.09529398 3.592215
+Mar 2018       1.789257 0.3890587 3.189454 -0.35216134 3.930674
+
+    \end{Verbatim}
+
+    \subsubsection{Arima Modeli}\label{arima-modeli}
+
+Zaman serilerinde öngörü analizi yapmanın bir diğer yolu da arima modeli
+uygulamaktır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} time\PYZus{}series2\PY{o}{\PYZlt{}\PYZhy{}}ts\PY{p}{(}data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} start\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1994}\PY{p}{,} \PY{l+m}{1}\PY{p}{)}\PY{p}{,} end\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2017}\PY{p}{,} \PY{l+m}{12}\PY{p}{)}\PY{p}{,} freq\PY{o}{=}\PY{l+m}{12}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} model21 \PY{o}{\PYZlt{}\PYZhy{}} arima\PY{p}{(}time\PYZus{}series2\PY{p}{,} order\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}\PY{p}{)}
+         model21
+         data\PYZus{}forecast\PYZus{}arima \PY{o}{\PYZlt{}\PYZhy{}} forecast\PY{p}{(}model21\PY{p}{,} h\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}arima\PY{p}{)}
+         plot\PY{p}{(}data\PYZus{}forecast\PYZus{}arima\PY{p}{,} \PY{p}{,}xlim\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2018.1}\PY{p}{,}\PY{l+m}{2018.3}\PY{p}{)}\PY{p}{)}
+         data\PYZus{}forecast\PYZus{}arima
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+Call:
+arima(x = time_series2, order = c(1, 0, 1))
+
+Coefficients:
+         ar1     ma1  intercept
+      0.9542  0.1786     4.0934
+s.e.  0.0173  0.0550     0.8477
+
+sigma^2 estimated as 0.3541:  log likelihood = -260.53,  aic = 529.07
+    \end{verbatim}
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & 0.006323252 & 0.5950555   & 0.3656777   & -1.272849   & 7.823498    & 0.2883696   & 0.01722624 \\
+\end{tabular}
+
+
+    
+    
+    \begin{verbatim}
+         Point Forecast     Lo 80    Hi 80     Lo 95    Hi 95
+Jan 2018       2.096852 1.3342576 2.859446 0.9305645 3.263139
+Feb 2018       2.188226 1.0358981 3.340553 0.4258927 3.950558
+Mar 2018       2.275417 0.8585829 3.692252 0.1085561 4.442279
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_100_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{k+kp}{summary}\PY{p}{(}data\PYZus{}forecast\PYZus{}arima\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Forecast method: ARIMA(1,0,1) with non-zero mean
+
+Model Information:
+
+Call:
+arima(x = time\_series2, order = c(1, 0, 1))
+
+Coefficients:
+         ar1     ma1  intercept
+      0.9542  0.1786     4.0934
+s.e.  0.0173  0.0550     0.8477
+
+sigma\^{}2 estimated as 0.3541:  log likelihood = -260.53,  aic = 529.07
+
+Error measures:
+                      ME      RMSE       MAE       MPE     MAPE      MASE
+Training set 0.006323252 0.5950555 0.3656777 -1.272849 7.823498 0.2883696
+                   ACF1
+Training set 0.01722624
+
+Forecasts:
+         Point Forecast     Lo 80    Hi 80     Lo 95    Hi 95
+Jan 2018       2.096852 1.3342576 2.859446 0.9305645 3.263139
+Feb 2018       2.188226 1.0358981 3.340553 0.4258927 3.950558
+Mar 2018       2.275417 0.8585829 3.692252 0.1085561 4.442279
+
+    \end{Verbatim}
+
+    Aşağıda genel olarak bütün doğrulukları göstereceğiz.Hatırlamak için
+
+ME:Ortalama Hata
+
+MAE : Ortalama Mutlak Hata
+
+MSE: Ortalama Hata Kare
+
+MPE: Ortalama Yüzde Hata
+
+MAPE: Ortalama Mutlak Yüzde Hata
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}ets\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}simple\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}holt\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}holtWinter\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}arima\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & -0.001786263 & 0.5867771    & 0.3525912    & -0.490289    & 7.254289     & 0.2780497    & 0.1595532   \\
+\end{tabular}
+
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & -0.002665668 & 0.6110392    & 0.3739591    & -0.6182691   & 7.84757      & 0.2949002    & 0.1759845   \\
+\end{tabular}
+
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & 0.01639161  & 0.6123117   & 0.3755175   & -0.06358456 & 7.867708    & 0.2961291   & 0.1759017  \\
+\end{tabular}
+
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & -0.01718173 & 0.6298921   & 0.3989148   & -1.049968   & 8.759911    & 0.31458     & 0.1432632  \\
+\end{tabular}
+
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & 0.006323252 & 0.5950555   & 0.3656777   & -1.272849   & 7.823498    & 0.2883696   & 0.01722624 \\
+\end{tabular}
+
+
+    
+    Yapılan 5 farklı öngörü modelinin hata değerlerini karşılaştırmak için
+literatürde en çok kullanılan ve tercih edilen Ortalama Mutlak Hata
+(MAE) değerini kullanılırız. Bu karşılaştırmaya göre ets() yöntemi en
+uygun yöntemdir.
+
+Not: Hatırlarsak alpha değerleri ets() modülünde diğer modüllere göre daha düşüktür. Yani,ets() modülünde koşullara verdiği
+tepki, diğer modellerde verdiği tepkiden daha az, daha tutarlıdır.
+
+    \subsubsection{Natural Gas Futures - Zaman Serilerinde Öngörü Özet}\label{natural-gas-futures---zaman-serilerinde-uxf6nguxf6ruxfc-uxf6zet}
+
+Verimizde öngörü yapabilmek için tahminleme verisi ve test verisi olmak
+üzere iki veri seti oluşturduk.Tahminleme verisini Ocak 1994 ile Aralık
+2017 arasını , test verisi için son üç ayı yani Ocak 2018 ile Mart 2018
+arasında aldık. Sırasıyla ets ,holtwinters ve arima modellerini
+uyguladık. Hata terimleri ve alpha değerleri incelendiğinde ets()
+modelinin öngörü için daha uygun olduğuna karar verdik.
+
+    İlk verimiz ile ilgili analiz ve öngörü hesaplamalarını yapmış olduk.
+Şimdi ikinci verimiz olan petrol verilerini inceleyeceğiz.
+
+    \section{Florida Field Production of Crude
+Oil}\label{florida-field-production-of-crude-oil}
+
+Verinin Yayıncısı: U.S. Energy Information Administration Data
+
+ABD ulusal ve devlet verilerinin;elektrik, kömür, doğal gaz ve petrol
+gibi tüm ana enerji ürünleri üzerindeki üretim, tüketim ve diğer
+göstergelere ilişkisini göstermektedir.
+
+Verinin Adı: Florida Field Production of Crude Oil
+
+Florida'nın ham petrol üretiminin göstergelere ilişkisini
+göstermektedir.Veri zaman serisi olarak ilerlemektedir.
+
+Verinin Sıklığı: Aylık
+
+Verinin Zaman Aralığı: 31.01.1981- 28.02.2018
+
+Verinin Alındığı Yer: Quandl
+
+Quandl yatırım profesyonellerine hizmet veren finansal, ekonomik ve
+alternatif veriler için bir platformdur.Verileri 500'den fazla
+yayıncıdan sağlar. Quandl'ın verilerine bir API aracılığıyla
+erişilebilir. Bir çok programlama dili için API erişimi (R, Python,
+Matlab, Maple ve Stata) vardır.
+
+Excel eklentisi, stok fiyat bilgisi dahil olmak üzere verilere erişim
+sağlar.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} data2\PY{o}{\PYZlt{}\PYZhy{}}Quandl\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{EIA/PET\PYZus{}MCRFPFL1\PYZus{}M\PYZdq{}}\PY{p}{,} api\PYZus{}key\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{BtbwkANCR4aHKBscujRb\PYZdq{}}\PY{p}{,} collapse\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{monthly\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Veriyi quandl veri sitesinden alıyoruz. Veri iki sütundan oluşmaktadır.
+İlk sütun tarih ikinci sütun ise üretim miktarıdır.
+
+   Aşağıda verimizi çizgizel grafik
+gösterimini görüyoruz.
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{k+kp}{rownames}\PY{p}{(}data2\PY{p}{)} \PY{o}{\PYZlt{}\PYZhy{}} data2\PY{p}{[}\PY{p}{,}\PY{l+m}{1}\PY{p}{]}
+         plot\PY{p}{(}data2\PY{p}{,}type\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{l\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+ 
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_112_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+ 
+    Grafik incelendiğinde petrol üretimi gittikçe
+azaldığı fark ediliyor.
+ \subsection{Decompose- Geleneksel Zaman Serisi Ayrışım Yöntemleri}  
+    Veriyi sezonsal veriden ayırmak için R paketinin decompose fonksiyonunu
+kullanıyoruz. Decompose fonksiyonu ile veri sezonsal etkiden ve trend
+etkisinden arınmaktadır.Veri aylık olduğundan dolayı sıklığı 12 olarak
+alıyoruz.
+
+Ek olarak verinin ayrışma yönteminin, toplamsal ya da çarpımsal olduğunu
+anlamak için type= c("additive") ve type= c("multiplicative") fonksiyonu
+kullanıyoruz.
+
+Dönemsel mevsimselliği incelemek için ise R 'ın figure fonksiyonu
+kullanılmaktadır.
+
+    Aşağıda zaman serisi (ts) verimize toplamsal ayrıştırma tipine decompose
+fonsiyonu uyguluyoruz. Böylelikle verimizdeki sezonsal ve trendsel
+etkiden çıkartmış oluyoruz. Plot fonksiyonu ile yaptığımız modeli
+grafiksel olarak gösteriyoruz. Figure fonksiyonu ile de zaman seriminizn
+12 aylık sezonsal etkisini gösteriyoruz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}43}]:} additive\PYZus{}model\PY{o}{\PYZlt{}\PYZhy{}}decompose\PY{p}{(}ts\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} start \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1981}\PY{p}{,} \PY{l+m}{1}\PY{p}{)}\PY{p}{,} end \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2018}\PY{p}{,} \PY{l+m}{2}\PY{p}{)}\PY{p}{,}freq\PY{o}{=}\PY{l+m}{12}\PY{p}{)}\PY{p}{,}type\PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{additive\PYZdq{}}\PY{p}{)}\PY{p}{)}
+         \PY{k+kp}{summary}\PY{p}{(}additive\PYZus{}model\PY{p}{)}
+         plot\PY{p}{(}additive\PYZus{}model\PY{p}{)}
+         plot\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}figure\PY{p}{,}type\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{b\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+         Length Class  Mode     
+x        446    ts     numeric  
+seasonal 446    ts     numeric  
+trend    446    ts     numeric  
+random   446    ts     numeric  
+figure    12    -none- numeric  
+type       1    -none- character
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_115_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_115_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Toplamsal ayrışma modelini incelediğimizde trend bileşeninin 1990
+yılında en düşük etkide bulunduğunu ancek sonrasında sürekli arttığı
+gözlenmektedir. Sezonsal etkiyi incelersek veri bütün yıllarda aynı
+sezonsal değerleri aldığını görüyoruz.
+
+Figure fonksiyonu ile gelen mevsimsellik etki inclendiğinde veri mart
+ayında en yüksek seviyede, ocak ayında ise en düşük seviyede
+mevsimsellikten etkilendiğini görebiliyoruz.
+\pagebreak  
+
+Aşağıda zaman serisi (ts) verimize çarpımsal ayrıştırma tipine decompose
+fonsiyonu uyguluyoruz. Böylelikle verimizdeki sezonsal ve trendsel
+etkiden çıkartmış oluyoruz. Plot fonksiyonu ile yaptığımız modeli
+grafiksel olarak gösteriyoruz. Figure fonksiyonu ile de zaman seriminizn
+12 aylık sezonsal etkisini gösteriyoruz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}44}]:} multiplicative\PYZus{}model\PY{o}{\PYZlt{}\PYZhy{}}decompose\PY{p}{(}ts\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} freq\PY{o}{=}\PY{l+m}{12}\PY{p}{)}\PY{p}{,} type\PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{multiplicative\PYZdq{}}\PY{p}{)}\PY{p}{)}
+         \PY{k+kp}{summary}\PY{p}{(}multiplicative\PYZus{}model\PY{p}{)}
+         plot\PY{p}{(}multiplicative\PYZus{}model\PY{p}{)}
+         plot\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}figure\PY{p}{,} type\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{b\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+         Length Class  Mode     
+x        446    ts     numeric  
+seasonal 446    ts     numeric  
+trend    446    ts     numeric  
+random   446    ts     numeric  
+figure    12    -none- numeric  
+type       1    -none- character
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_118_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_118_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Çarpımsal ayrışma modelini incelediğimizde trend bileşeninin 1990
+yılında en düşük etkide bulunduğunu ancek sonrasında sürekli arttığı
+gözlenmektedir. Sezonsal etkiyi incelersek veri bütün yıllarda aynı
+sezonsal değerleri aldığını görüyoruz.
+
+Figure fonksiyonu ile gelen mevsimsellik etki inclendiğinde veri mart
+ayında en yüksek seviyede, ocak ayında ise en düşük seviyede
+mevsimsellikten etkilendiğini görebiliyoruz.
+
+    Toplamsal ve çarpımsal ayrışma model grafiksel olarak incelendiğinde
+random kısımlarında büyük farklılıklar gözlenmektedir. Grafiksel olarak
+karar verilirse additive model dahal uygundur. Ancak doğruluğundan emin
+olmak için ilerleyen aşamalarda veriye arima modeli uygulayacağız.
+\pagebreak
+Summary fonksiyonu ile verinin özetini göstermiş olunur.
+
+    Aşağıda asıl verimize, toplamsal ayrıştırma sezonsal ve trendsel etkiden
+ayrılmış verimize, çarpımsal ayrıştırma ile sezonsal ve trendsel etkiden
+ayrılmış verimizin özetlerini görüyoruz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{k+kp}{summary}\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}
+         \PY{k+kp}{summary}\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+         \PY{k+kp}{summary}\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   53.0   185.5   390.0   539.2   563.8  3606.0 
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+-190.9838  -12.0257    0.9057   -1.0926   15.3770  112.8715 
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.4991  0.9697  1.0046  0.9970  1.0395  1.4679 
+    \end{verbatim}
+
+ \subsection{Normallik Testi - Shapiro Wilk Test}   
+Verinin normalliğini kontrol etmek için shapiro.test
+fonksiyonu kullanılmaktadır.P değeri testen ne kadar emin olduğunu
+göstermektedir.P değerinde güven aralığını genelde \%95 olarak alınır,
+yani p değeri 0.05'tan küçük ise yaptığımız testen emin olabiliriz. W
+değeri 1 değerine ne kadar yakınsa veri normalliğe o derece yakındır.
+
+    Shapiro testini toplumsal ve çarpımsal ayrışma modeline uygulanır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}46}]:} shapiro.test\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+         shapiro.test\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Shapiro-Wilk normality test
+
+data:  na.omit(additive_model$random)
+W = 0.90008, p-value = 2.956e-16
+
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+
+	Shapiro-Wilk normality test
+
+data:  na.omit(multiplicative_model$random)
+W = 0.80709, p-value < 2.2e-16
+
+    \end{verbatim}
+
+    
+    Toplamsal ve çarpımsal ayrışma modeline uygulanan normallik testi
+incellendiğinde p değerlerinin oldukça küçük, neredeyse 0 yakın olduğunu
+görüyoruz. Yaptığımız iki testte de oldukça eminiz. W değeri
+incelendiğin de ise toplamsal modelin 1 daha yakın olduğu görülmektedir.
+Verimiz normaldir, diyebiliriz.
+\subsection{Otokorelasyon}
+    Zaman serisiyle bu serinin gecikmeli serileri arasındaki ilişkiyi
+göstermek için R'ın acf ve pacf fonksiyonunu toplamsal ve çarpımsal
+ayrışma modeline uygulanır.
+
+    ACF eğer çok yüksek bir değerden başlayıp çok yavaş küçülüyorsa, bu
+serinin durağan olmadığının bir göstergesidir.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} acf\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+         acf\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_129_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_129_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Toplamsal ve çarpımsal ayrıştırma modelleri için acf değerlerini
+incelediğimizde iki durumunda durağan halde olduğunu söyleyebiliriz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}48}]:} pacf\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+         pacf\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_131_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_131_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+\pagebreak      
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}49}]:} hist\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_132_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+\pagebreak  
+ \subsection{Durağanlık Analizi}   
+    Veride durağanlık durumunu belirlemek için sırasıyla ;Augmented
+Dickey-Fuller Test- Kwiatkowski-Phillips-Schmidt-Shin (KPSS) Test -
+Phillips--Perron Birim Kök Testi uygulanır.
+
+    \paragraph{Augmented Dickey Fuller
+Test}\label{augmented-dickey-fuller-test}
+
+İlk olarak Augmented Dickey Fuller testini verinin bileşenlerden
+ayrılmamış haline, toplamsal ve çarpımsal ayrışma modellerine sırasıyla
+uyguluyarak verinin durağanlığını kontrol ediyoruz. ADF testini R içinde
+bulunan adf.test fonksiyonu ile elde edebiliriz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} adf.test\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}
+         adf.test\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+         adf.test\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in adf.test(data2[, 2]):
+"p-value greater than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	Augmented Dickey-Fuller Test
+
+data:  data2[, 2]
+Dickey-Fuller = 6.9986, Lag order = 7, p-value = 0.99
+alternative hypothesis: stationary
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in adf.test(na.omit(additive\_model\$random)):
+"p-value smaller than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	Augmented Dickey-Fuller Test
+
+data:  na.omit(additive_model$random)
+Dickey-Fuller = -9.7154, Lag order = 7, p-value = 0.01
+alternative hypothesis: stationary
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in adf.test(na.omit(multiplicative\_model\$random)):
+"p-value smaller than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	Augmented Dickey-Fuller Test
+
+data:  na.omit(multiplicative_model$random)
+Dickey-Fuller = -8.2286, Lag order = 7, p-value = 0.01
+alternative hypothesis: stationary
+
+    \end{verbatim}
+
+    
+    Yapılan ADF testteki sonuçlar: Additive ve multiplicative modeline göre
+veriler güven aralığı (\(p<0.05\)) içerisindedir, yani veri durağandır.
+
+    \subparagraph{Kwiatkowski-Phillips-Schmidt-Shin (KPSS)
+Test}\label{kwiatkowski-phillips-schmidt-shin-kpss-test}
+
+İlk olarak Kwiatkowski-Phillips-Schmidt-Shin (KPSS) Test testini verinin
+bileşenlerden ayrılmamış haline, toplamsal ve çarpımsal ayrışma
+modellerine sırasıyla uyguluyarak verinin durağanlığını kontrol
+ediyoruz. KPSS testini R içinde bulunan kpss.test fonksiyonu ile elde
+edebiliriz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} kpss.test\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} null\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Trend\PYZdq{}}\PY{p}{)}
+         kpss.test\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{,} null\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Trend\PYZdq{}}\PY{p}{)}
+         kpss.test\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{,} null\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Trend\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in kpss.test(data2[, 2], null = "Trend"):
+"p-value smaller than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	KPSS Test for Trend Stationarity
+
+data:  data2[, 2]
+KPSS Trend = 1.0851, Truncation lag parameter = 4, p-value = 0.01
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in kpss.test(na.omit(additive\_model\$random), null = "Trend"):
+"p-value greater than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	KPSS Test for Trend Stationarity
+
+data:  na.omit(additive_model$random)
+KPSS Trend = 0.036044, Truncation lag parameter = 4, p-value = 0.1
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in kpss.test(na.omit(multiplicative\_model\$random), null = "Trend"):
+"p-value greater than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	KPSS Test for Trend Stationarity
+
+data:  na.omit(multiplicative_model$random)
+KPSS Trend = 0.016544, Truncation lag parameter = 4, p-value = 0.1
+
+    \end{verbatim}
+
+    
+    Yapılan KPSS testteki sonuçlar:
+
+Additive ve multiplicative modeline göre veriler güven aralığı
+(\(p>0.05\)) içerisindedir, yani veri durağandır.
+
+    \subparagraph{Phillips--Perron Birim Kök
+Testi}\label{phillipsperron-birim-kuxf6k-testi}
+\pagebreak
+Phillips--Perron Birim Kök Testi testini verinin bileşenlerden
+ayrılmamış haline, toplamsal ve çarpımsal ayrışma modellerine sırasıyla
+uyguluyarak verinin durağanlığını kontrol ediyoruz. Phillips--Perron
+Birim Kök testini R içinde bulunan pp.test fonksiyonu ile elde
+edebiliriz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}52}]:} pp.test\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}
+         pp.test\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+         pp.test\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in pp.test(data2[, 2]):
+"p-value greater than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	Phillips-Perron Unit Root Test
+
+data:  data2[, 2]
+Dickey-Fuller Z(alpha) = 17.551, Truncation lag parameter = 5, p-value
+= 0.99
+alternative hypothesis: stationary
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in pp.test(na.omit(additive\_model\$random)):
+"p-value smaller than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	Phillips-Perron Unit Root Test
+
+data:  na.omit(additive_model$random)
+Dickey-Fuller Z(alpha) = -280.28, Truncation lag parameter = 5, p-value
+= 0.01
+alternative hypothesis: stationary
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message in pp.test(na.omit(multiplicative\_model\$random)):
+"p-value smaller than printed p-value"
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+
+	Phillips-Perron Unit Root Test
+
+data:  na.omit(multiplicative_model$random)
+Dickey-Fuller Z(alpha) = -196.72, Truncation lag parameter = 5, p-value
+= 0.01
+alternative hypothesis: stationary
+
+    \end{verbatim}
+
+    
+    Yapılan Phillips-Person testteki sonuçlar:
+
+Additive ve multiplicative modeline göre veriler güven aralığı
+(\(p<0.05\)) içerisindedir, yani veri durağandır.
+
+    \subsection{Arima}\label{arima}
+
+    R'da olan auto.arima fonksiyonu ile verinin kalan sezonsal, trend ve
+diğer etkenleri kontrol eder ve onlardan arındırır. Veriye auto.arima
+uygulandığında AIC , BIC ve AICc değerlerinin en düşük olanı analiz için
+daha kabul edilebilir bir değer almaktadır. ARIMA için p,d,q
+fonksiyonları ile verinin karmaşıklığı fark edilir ve en sade , en kolay
+model seçilir.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}53}]:} auto.arima\PY{p}{(}ts\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+         auto.arima\PY{p}{(}ts\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{,} start\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1981}\PY{p}{,} \PY{l+m}{1}\PY{p}{)}\PY{p}{,} end\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2018}\PY{p}{,} \PY{l+m}{1}\PY{p}{)}\PY{p}{,} freq\PY{o}{=}\PY{l+m}{12}\PY{p}{)}\PY{p}{)}
+         auto.arima\PY{p}{(}ts\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{,} start\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1981}\PY{p}{,} \PY{l+m}{1}\PY{p}{)}\PY{p}{,} end\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2018}\PY{p}{,} \PY{l+m}{1}\PY{p}{)}\PY{p}{,} freq\PY{o}{=}\PY{l+m}{12}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Series: ts(data2[, 2]) 
+ARIMA(0,2,2) 
+
+Coefficients:
+          ma1     ma2
+      -1.4603  0.5198
+s.e.   0.0439  0.0435
+
+sigma^2 estimated as 2159:  log likelihood=-2335.03
+AIC=4676.06   AICc=4676.11   BIC=4688.35
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+Series: ts(na.omit(additive_model$random), start = c(1981, 1), end = c(2018,      1), freq = 12) 
+ARIMA(2,0,1) with non-zero mean 
+
+Coefficients:
+         ar1      ar2      ma1     mean
+      1.0579  -0.3104  -0.8928  -1.0126
+s.e.  0.0519   0.0456   0.0314   0.6058
+
+sigma^2 estimated as 885.3:  log likelihood=-2139.52
+AIC=4289.03   AICc=4289.17   BIC=4309.52
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+Series: ts(na.omit(multiplicative_model$random), start = c(1981, 1),      end = c(2018, 1), freq = 12) 
+ARIMA(2,0,3)(0,0,1)[12] with non-zero mean 
+
+Coefficients:
+         ar1      ar2      ma1     ma2     ma3     sma1    mean
+      1.5297  -0.8885  -1.0847  0.3008  0.2076  -0.1940  0.9973
+s.e.  0.0499   0.0461   0.0736  0.0774  0.0615   0.0509  0.0034
+
+sigma^2 estimated as 0.005781:  log likelihood=518.12
+AIC=-1020.24   AICc=-1019.91   BIC=-987.46
+    \end{verbatim}
+
+    
+    Veriye, son(şubat ayı) verisi eklenmeden önce arima modeli uyguladığımda
+sonuç aşağıdaki gibi olmuştur.
+
+Verinin hiçbir bileşenden ayrılmadığı durumda auto.arima uygulandığında
+p =0 , d= 2 ve q=2 çıkmaktadır. d=2 olması verinin durağan olmadığını
+gösterir.
+
+Verinin toplamsal ayrışma modeline auto.arima uygulandığında p= 2 , d=0
+ve q=1 çıkmaktadır. d=0 veri durağandır.
+
+Verilerde çarpımsal modele auto.arima uygulandığında p= 2 , d=0 ve q=3
+çıkmaktadır. d=0 veri durağandır.
+
+Hangi ayrışma modelini seçmemiz gerektiğine karar vermek için ilk olarak
+p,d,q değerlerini karşılaştırmak gerekmektedir. Verinin durağan modeli
+seçilmesi gerektiğinden hiçbir bileşenden ayrılmadığı model elenir.
+Toplamsal ve çarpımsal model karşılaştırıldığında toplamsal modelin daha
+basit olduğu görülür. İkinci olarak ( Seçtiğimiz modelin doğruluğundan
+emin olmak için ) auto.arima nın bize vermiş olduğu AIC,AICc ve BIC
+değerlerinin en küçük olanı seçilmesi gerekmektedir. Ayrışma modelleri
+için incelendiğinde toplamsal modelin daha uygun olduğu görülmektedir.
+
+Formülü :
+
+\[ \hat Y_{d_t} =1.0579 Y_{t-1} -0.3104 Y_{t-2}+E\]
+
+d=0 olduğunda orijinal seri zaten durağandır ve farkının alınmasına da
+gerek yoktur.
+
+    Aşağıda her ay güncellenen verimizde şubat ayı eklendiği şekline arima
+modeli uygulayacağız.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}54}]:} auto.arima\PY{p}{(}ts\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+         auto.arima\PY{p}{(}ts\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         auto.arima\PY{p}{(}ts\PY{p}{(}na.omit\PY{p}{(}multiplicative\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Series: ts(data2[, 2]) 
+ARIMA(0,2,2) 
+
+Coefficients:
+          ma1     ma2
+      -1.4603  0.5198
+s.e.   0.0439  0.0435
+
+sigma^2 estimated as 2159:  log likelihood=-2335.03
+AIC=4676.06   AICc=4676.11   BIC=4688.35
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+Series: ts(na.omit(additive_model$random)) 
+ARIMA(2,0,1) with non-zero mean 
+
+Coefficients:
+         ar1      ar2      ma1     mean
+      1.0680  -0.3148  -0.9066  -0.8773
+s.e.  0.0516   0.0466   0.0291   0.5558
+
+sigma^2 estimated as 902.4:  log likelihood=-2090.78
+AIC=4191.55   AICc=4191.69   BIC=4211.92
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+Series: ts(na.omit(multiplicative_model$random)) 
+ARIMA(2,0,1) with non-zero mean 
+
+Coefficients:
+         ar1      ar2      ma1    mean
+      1.3402  -0.5220  -0.8800  0.9967
+s.e.  0.0704   0.0408   0.0793  0.0025
+
+sigma^2 estimated as 0.006167:  log likelihood=490.07
+AIC=-970.14   AICc=-970   BIC=-949.78
+    \end{verbatim}
+
+    
+    Ancak her ay güncellenen veride, yani şubat ayı eklenen veriye arima
+modeli uygulandığında sonuç aşağıdaki gibi olmuştur.
+
+Verinin hiçbir bileşenden ayrılmadığı durumda auto.arima uygulandığında
+p =0 , d= 2 ve q=2 çıkmaktadır. d=2 olması verinin durağan olmadığını
+gösterir.
+
+Verinin toplamsal ayrışma modeline auto.arima uygulandığında p= 2 , d=0
+ve q=1 çıkmaktadır. d=0 veri durağandır.
+
+Verilerde çarpımsal modele auto.arima uygulandığında p= 2 , d=0 ve q=1
+çıkmaktadır. d=0 veri durağandır.
+
+Hangi ayrışma modelini seçmemiz gerektiğine karar vermek için ilk olarak
+p,d,q değerlerini karşılaştırmak gerekmektedir. Verinin durağan modeli
+seçilmesi gerektiğinden hiçbir bileşenden ayrılmadığı model elenir.
+Toplamsal ve çarpımsal model karşılaştırıldığında toplamsal modelin eşit
+olduğu görülür. İkinci olarak ( Seçtiğimiz modelin doğruluğundan emin
+olmak için ) auto.arima nın bize vermiş olduğu AIC,AICc ve BIC
+değerlerinin en küçük olanı seçilmesi gerekmektedir.
+
+Geri sapmalardan en düşük olanını yani çarpımsal modeli seçersek:
+
+Formülü :
+
+\[ \hat Y_{d_t} =1.3402 Y_{t-1}+-0.5220 Y_{t-2} +  E\]
+
+d=0 olduğunda orijinal seri zaten durağandır ve farkının alınmasına da
+gerek yoktur.
+
+    Bu durumda iki arima modelini karşılaştırırsak anlayacağımız, veride bir
+değerin (bir aylık verinin) dahi modeli değiştirebildiğini görmüş
+bulunmaktayız.
+
+    Veride sezonsal etkinin olup olmadığını kontrol etmek için veriden
+hiçbir bileşenin çıkarılmadığı haline auto.arima uygulanır.Bunun için
+arimanın argümanlarından sseasonal.test'ten yararlanılır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}55}]:} auto.arima\PY{p}{(}ts\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+         auto.arima\PY{p}{(}ts\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{)} \PY{p}{,}seasonal.test \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{ocsb\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{ch\PYZdq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Series: ts(data2[, 2]) 
+ARIMA(0,2,2) 
+
+Coefficients:
+          ma1     ma2
+      -1.4603  0.5198
+s.e.   0.0439  0.0435
+
+sigma^2 estimated as 2159:  log likelihood=-2335.03
+AIC=4676.06   AICc=4676.11   BIC=4688.35
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+Series: ts(data2[, 2]) 
+ARIMA(0,2,2) 
+
+Coefficients:
+          ma1     ma2
+      -1.4603  0.5198
+s.e.   0.0439  0.0435
+
+sigma^2 estimated as 2159:  log likelihood=-2335.03
+AIC=4676.06   AICc=4676.11   BIC=4688.35
+    \end{verbatim}
+
+    
+    Herhangi bir işlem yapılmayan veriye auto.arima ile sezonsal test
+uygulandığında ARIMA modelinde; p,d,q değerlerinde ve AIC , AICc ,BIC
+değerlerinde herhangi bir farklılık görünmemektedir. Bir farklı ifade
+ile veride sezonsal etki bulunmamaktadır.
+
+    Normallik testini seçtiğimiz toplamsal modele tekrar uygulanır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}56}]:} white\PYZus{}noise2\PY{o}{\PYZlt{}\PYZhy{}}arima\PY{p}{(}ts\PY{p}{(}na.omit\PY{p}{(}additive\PYZus{}model\PY{o}{\PYZdl{}}random\PY{p}{)}\PY{p}{)}\PY{p}{,} order\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}\PY{p}{)}
+         shapiro.test\PY{p}{(}white\PYZus{}noise2\PY{o}{\PYZdl{}}residuals\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Shapiro-Wilk normality test
+
+data:  white_noise2$residuals
+W = 0.87153, p-value < 2.2e-16
+
+    \end{verbatim}
+
+    
+    Normallik testine göre p değeri oldukça düşük ve w değeri yüksektir.
+Artık verinin beyaz gürültü olduğunu ve veride herhangi bir bileşen
+kalmadığını söylenebilir.
+\pagebreak
+\subsection{Zaman Serilerinin Mevsimsellikten Arındırılması (de-seasonalize)}
+ 
+Zaman serisinin mevsimsellik deseni hakkında fikir verir ve mevsimsel
+etkiler olmadan verilerin modellenmesine yardımcı olur. Zaman serisini
+mevsimsellikten arındırmak için aşağıdaki iki adım kullanılabilir. 1.
+Adım: stl() fonksiyonu ile zaman serisi ayrılır. 2. Adım: forecast
+kütüphanesi içerisindeki seasadj() fonksiyonu kullanılır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}57}]:} datastl2\PY{o}{\PYZlt{}\PYZhy{}} stl\PY{p}{(}ts\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} freq\PY{o}{=}\PY{l+m}{12}\PY{p}{)}\PY{p}{,} s.window\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{periodic\PYZdq{}}\PY{p}{)}
+         \PY{k+kp}{summary}\PY{p}{(}datastl2\PY{p}{)}
+         plot\PY{p}{(}datastl2\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ Call:
+ stl(x = ts(data2[, 2], freq = 12), s.window = "periodic")
+
+ Time.series components:
+    seasonal             trend            remainder         
+ Min.   :-34.17510   Min.   :  63.888   Min.   :-183.62055  
+ 1st Qu.: -9.65014   1st Qu.: 182.538   1st Qu.: -12.84803  
+ Median : -1.33071   Median : 392.483   Median :   0.94450  
+ Mean   : -0.03514   Mean   : 540.407   Mean   :  -1.18602  
+ 3rd Qu.: 13.54174   3rd Qu.: 545.367   3rd Qu.:  15.28002  
+ Max.   : 18.50047   Max.   :3368.702   Max.   : 218.79751  
+ IQR:
+     STL.seasonal STL.trend STL.remainder data  
+      23.19       362.83     28.13        378.25
+   \%   6.1         95.9       7.4         100.0 
+
+ Weights: all == 1
+
+ Other components: List of 5
+ \$ win  : Named num [1:3] 4461 19 13
+ \$ deg  : Named int [1:3] 0 1 1
+ \$ jump : Named num [1:3] 447 2 2
+ \$ inner: int 2
+ \$ outer: int 0
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_158_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}58}]:} ts\PYZus{}sa2 \PY{o}{\PYZlt{}\PYZhy{}} seasadj\PY{p}{(}datastl2\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}59}]:} par\PY{p}{(}mfrow\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{3}\PY{p}{,}\PY{l+m}{2}\PY{p}{)}\PY{p}{)}
+         plot\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} type\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{l\PYZdq{}}\PY{p}{,} main\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Real\PYZdq{}}\PY{p}{)}  
+         plot\PY{p}{(}ts\PYZus{}sa2\PY{p}{,} type\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{l\PYZdq{}}\PY{p}{,} main\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Seasonal Adjusted\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_160_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Normallik testini ölçmek için sezonsal etkisi çıkarılmış veriye
+shapiro.test uygulanır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}60}]:} shapiro.test\PY{p}{(}ts\PYZus{}sa2\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	Shapiro-Wilk normality test
+
+data:  ts_sa2
+W = 0.66646, p-value < 2.2e-16
+
+    \end{verbatim}
+
+    
+    Durağanlık testine göre w değeri 1'den oldukça düşüktür. Bu yüzden ilk
+yol olarak yapılan çarpımsal modele ilk başta decompose ve sonrasında da
+auto.arima modelinin uygulandığı analiz yöntemi tercih edilir.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}61}]:} acf\PY{p}{(}ts\PYZus{}sa2\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_164_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Otokorelasyon katsayısı incelendiğinde verinin yavaş yavaş azaldığı
+gözlenmektedir. Bu durumda ts\_sa mevsimsel etkiden arındırılmış zaman
+serimizin durağan olmadığını göstermektedir.
+\pagebreak  
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}62}]:} pacf\PY{p}{(}ts\PYZus{}sa2\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_166_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Sezonsal etkiden arındırılan verinin (ts\_sa2) , hala sezonsal etki
+içerip içermediğini anlamak (mevsimsellik farkını bulmak) için nsdiffs
+fonksiyonu uygulanır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}63}]:} nsdiffs\PY{p}{(}ts\PYZus{}sa2\PY{p}{)}
+\end{Verbatim}
+
+
+    0
+
+    
+    Mevsimsellik farkı sıfırdır. Mevsimsel etki yoktur.
+\pagebreak  
+    \subsection{Florida Field Production of Crude Oil- Zaman Serisi Analizi Özet}\label{florida-field-production-of-crude-oil--zaman-serisi-analizi-uxf6zet}
+
+Verinin Adı: Florida Field Production of Crude Oil
+
+Verinin Alındığı Yer: Quandl
+
+Verinin Sıklığı: Aylık
+
+Verinin Zaman Aralığı: 31.01.1981- 28.02.2018
+
+Veride iki sütun bulunmaktadır. Sütunlardan birisi zaman, diğeri ise
+kullanılan değerdir. Amaç zaman serisindeki gözlenen değerlerinin trend,
+mevsimsel, çevresel ve rastgele etkenlerden ayırmak ve doğru modeli
+seçmektir. Bu doğrultuda iki yöntem kullandık.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Yöntem : R'da bulunan decompose fonksiyonu ile seriyi mevsimsel ve
+  trendsel etkenlerden ayırmaktır. Decompose fonksiyonunu zaman
+  serilerin hep toplamına hem de çarpımına ayrı ayrı uyguladık. Daha net
+  sonuç veren veri seçilir.Toplamsal ayrışma modelini incelediğimizde
+  trendsel etkinin 1990 yıllarında en düşük etkiye sahip olduğunu ancak
+  sonrasında sürekli arttığını ve mevsimsel etkinin aynı olduğunu
+  görüyoruz. Çarpımsal model de aynı sonuca varıyoruz. İki ayrıştırma
+  modeli arasındaki fark random bileşende ortaya çıkmaktadır.Ancak
+  kullanılan veride toplanan ve çarpılan veride net bir karar
+  veremiyoruz. Verimizin zaman bileşenlerinden ayırldıktan sonraki
+  normallik durumunu kontrol etmek için veriye normallik
+  testi(shapiro.test )uyguladık, iki modelin de p değerleri güven
+  aralığında (\(p<0.05\) ) çıktı. W değerleri karşılaştırıldığında ise
+  toplamsal ayrışma modelinin daha iyi sonuç verdiğini görüyoruz.Sonuç
+  olarak iki model içinde verimizin bileşenlerden ayrılmış haline normal
+  diyebiliriz. Zaman bileşenlerinden ayrılmış olan verimizin
+  durağanlığını kontrol etmek için adf,kpss ve pp testlerini uyguladık.
+  Üç testin sonucu da verimizin toplamsal ve çarpımsal model için
+  durağan olduğunu gösterdi. Sonraki aşamalarda decompose fonksiyonu ile
+  veremediğimiz hangi modelin uygun olduğu kararını anlamak için arima
+  testini uyguladık. Veriye bir aylık (şubat ayı) eklenmeden önceki
+  durumda arima vurduğumuzda; Arima ile gelen p,q,d değerlerinden en
+  basit olanını ve AIC, AICc ve BIC değerlerinden en düşük olanını yani
+  toplamsal modele daha uygun olduğuna karar verdik. Ancak şubat ayı da
+  eklenen veride p,q,d değerlerinin toplamsal ve çarpımsal model için
+  aynı olduğunu ,ama AIC , AICc ve BIC değerlerinin çarpımsal modelde
+  daha düşük olduğunu gözlemledik. Burdan verinin bir aylık değerinin
+  arima modellemesinde büyük bir etki sahibi olduğunu fark ettik. Ek
+  olarak herhangi bir bileşenden ayrılmamış veriye arima ile sezonsal
+  etkinin olup olmadığını ölçtük. Sonucunda ise herhangi bir farklılık
+  olmadığını yani verimizde sezonsal bir etkinin olmadığını
+  söyleyebiliriz. Decompose ve sonrasında uygulanan auto.arima ile kalan
+  verimize normallik testini tekrar uygularsak güven aralığını
+  sağladığını ( \( p=2.2e-16 \textless{}0.05 \)) ve w= 0.87153 yani 1
+  oldukça yakın olduğunu görüyoruz. Bu da verimizin normal olduğunu
+  söyler. Ek olarak artık verimize beyaz gürültü verisi diyebiliriz.
+\item
+  Yöntem :Zaman serisini mevsimsel bileşenlerinden ayırmak için R'da
+  bulunan stl fonksiyonunu kullandık. Verilerin mevsimsel etkisinden
+  ayrıldığı durumda normallik değerlerini ölçmek için normallik
+  (shapiro.test) testini uyguladık.Sonucunda :\(p=2.2e-16 \textless{}0.05 \) ve w=0.66646 değerlerini elde ettik. Ancak w
+  değerleri 1'değerinden oldukça düşüktür.Veri için normal dağılmamıştır
+  diyeebiliriz. Ek olarak mevsimsellik etkisinden arındırılmış veri için
+  acf testi uygulandığında verinin yavaş yavaş azaldığı gözlenmektedir.
+  Bu durum için verinin normal olmadığı söylenmektedir.
+\end{enumerate}
+
+Ek olarak uyguladığımız nsdiffs fonksiyonu ile birlikte verinin
+mevsimsel etki içerip içermediğine, ya da kalıp kalmadığına karar
+verilmektedir. Fonksiyonu uyguladığımızda görülüyor ki veri mevsimsel
+bileşen içermemektedir.
+
+Yukarıdaki üç yöntemi karşılatırdığımızda (normalliklerini) kullanmamız
+gereken modelin çarpımsal ve kullanmamız gereken yöntemin sırasıyla
+decompose ve arima olmasına karar verdik.
+
+    \subsection{Forecast}\label{forecast}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}64}]:} \PY{k+kn}{require}\PY{p}{(}forecast\PY{p}{)}
+\end{Verbatim}
+
+
+    İlk olarak verimizin zaman serisi olduğunu gösteriyoruz. Zaman serisi
+sıklığını aylık olarak tanımlıyoruz. Zaman aralığımızı 01.1981 - 11.2017
+kadar olan süreyi alıyoruz. 12.2017-02.2018 süresini de test verisi
+olarak alıyoruz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}65}]:} time\PYZus{}series3 \PY{o}{\PYZlt{}\PYZhy{}}ts\PY{p}{(}data2\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}\PY{p}{,} start\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1981}\PY{p}{,} \PY{l+m}{1}\PY{p}{)}\PY{p}{,} end\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2017}\PY{p}{,} \PY{l+m}{11}\PY{p}{)}\PY{p}{,} freq\PY{o}{=}\PY{l+m}{12}\PY{p}{)}
+         plot\PY{p}{(}time\PYZus{}series3\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_174_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    \subsubsection{Üstel Düzleştirme Yöntemi- Exponential Smooting}
+    Aşağıda üstel düzleştirme yönteminin ets() fonksiyonu kullanılmış
+halini uygulayacağız. Öngörü doğruluğunu hesaplamak için R'ın accuracy
+fonksiyonunu kullanılır. Accuracy fonksiyonu ile gelen verilerde:
+
+    Öngörü modellerinden ilk olarak ets modelini deniyoruz.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}66}]:} model11 \PY{o}{\PYZlt{}\PYZhy{}}ets\PY{p}{(}time\PYZus{}series3\PY{p}{)}
+         data\PYZus{}forecast\PYZus{}ets \PY{o}{\PYZlt{}\PYZhy{}} forecast\PY{p}{(}model11\PY{p}{,} h\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}ets\PY{p}{)}
+         plot\PY{p}{(}data\PYZus{}forecast\PYZus{}ets\PY{p}{,} \PY{p}{,}xlim\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2017.12}\PY{p}{,}\PY{l+m}{2018.2}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & 2.774238   & 39.27737   & 26.06343   & -0.3375955 & 7.387411   & 0.2734303  & 0.04872081\\
+\end{tabular}
+
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_177_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Verimize ets() fonksiyonu ile öngörü hesapladığımızda bize ETS(A,A,A)
+argümanlarını vermiştir. Bu sonuçta öngörüde toplamsal hata, toplamsal
+trend ve toplamsal sezonsal etkinin uygulandığı yöntemdir denilebilir.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}67}]:} \PY{k+kp}{summary}\PY{p}{(}data\PYZus{}forecast\PYZus{}ets\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Forecast method: ETS(A,A,A)
+
+Model Information:
+ETS(A,A,A) 
+
+Call:
+ ets(y = time\_series3) 
+
+  Smoothing parameters:
+    alpha = 0.6024 
+    beta  = 0.0461 
+    gamma = 0.1034 
+
+  Initial states:
+    l = 166.9415 
+    b = 2.3989 
+    s=4.2413 -11.3018 5.7337 -9.4752 -6.5625 -2.0671
+           -5.4372 19.2079 3.535 19.4916 9.5222 -26.8879
+
+  sigma:  39.2774
+
+     AIC     AICc      BIC 
+5985.646 5987.086 6055.237 
+
+Error measures:
+                   ME     RMSE      MAE        MPE     MAPE      MASE
+Training set 2.774238 39.27737 26.06343 -0.3375955 7.387411 0.2734303
+                   ACF1
+Training set 0.04872081
+
+Forecasts:
+         Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+Dec 2017       3142.650 3092.314 3192.986 3065.667 3219.632
+Jan 2018       3101.060 3041.067 3161.054 3009.309 3192.812
+Feb 2018       3260.957 3191.518 3330.395 3154.760 3367.153
+
+    \end{Verbatim}
+
+    ETS yöntemiyle gelen alpha değeri 0.6024 çıkmıştır. Bu sonuçta değişen
+bileşenlerden ortalama bir derecede etkinleneceğini göstermektedir.
+\subsubsection{Basit Üstel Düzleştirme Yöntemi (Durağan Seriler için)}
+    Aşağıda üstel düzleştirme yönteminin HoltWinters() fonksiyonu
+kullanılmış halini uygulayacağız.Bu model trend, sezonsal bileşenleri de
+içermemediği durumdur.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}68}]:} model12 \PY{o}{\PYZlt{}\PYZhy{}}HoltWinters\PY{p}{(}time\PYZus{}series3\PY{p}{,} beta\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{,} gamma\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+         model12
+         data\PYZus{}forecast\PYZus{}simple \PY{o}{\PYZlt{}\PYZhy{}} forecast\PY{p}{(}model12\PY{p}{,} h\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}simple\PY{p}{)}
+         plot\PY{p}{(}data\PYZus{}forecast\PYZus{}simple\PY{p}{,} \PY{p}{,}xlim\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2017.11}\PY{p}{,}\PY{l+m}{2018.2}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Holt-Winters exponential smoothing without trend and without seasonal component.
+
+Call:
+HoltWinters(x = time_series3, beta = FALSE, gamma = FALSE)
+
+Smoothing parameters:
+ alpha: 0.7810215
+ beta : FALSE
+ gamma: FALSE
+
+Coefficients:
+      [,1]
+a 3051.299
+    \end{verbatim}
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & 8.410204    & 47.56481    & 30.51237    & 0.03430261  & 7.450028    & 0.320104    & -0.06453352\\
+\end{tabular}
+
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_182_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}69}]:} \PY{k+kp}{summary}\PY{p}{(}data\PYZus{}forecast\PYZus{}simple\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Forecast method: HoltWinters
+
+Model Information:
+Holt-Winters exponential smoothing without trend and without seasonal component.
+
+Call:
+HoltWinters(x = time\_series3, beta = FALSE, gamma = FALSE)
+
+Smoothing parameters:
+ alpha: 0.7810215
+ beta : FALSE
+ gamma: FALSE
+
+Coefficients:
+      [,1]
+a 3051.299
+
+Error measures:
+                   ME     RMSE      MAE        MPE     MAPE     MASE
+Training set 8.410204 47.56481 30.51237 0.03430261 7.450028 0.320104
+                    ACF1
+Training set -0.06453352
+
+Forecasts:
+         Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+Dec 2017       3051.299 2991.235 3111.363 2959.439 3143.159
+Jan 2018       3051.299 2975.086 3127.512 2934.741 3167.857
+Feb 2018       3051.299 2961.805 3140.793 2914.430 3188.168
+
+    \end{Verbatim}
+
+    Düzleştirme katsayı değeri (alpha) arttıkça daha büyük tahmin
+farklılıkları oluşmaktadır. Basit üstel düzleştirme yöntemi
+uyguladığımızda gelen alpha değeri 0.7810215'dir.
+
+    \subsubsection{Holt Üstel Düzleştirme Yöntemi D: (Doğrusal Trendi Olan Seriler için)}\label{holt-uxfcstel-duxfczleux15ftirme-yuxf6ntemi-doux11frusal-trendi-olan-seriler-iuxe7in}
+
+Trende sahip mevsimsel dalgalanması olmayan serilerin tahmin işleminde
+Holt üstel düzleştirme yöntemi kullanılmaktadır.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}70}]:} model13 \PY{o}{\PYZlt{}\PYZhy{}}HoltWinters\PY{p}{(}time\PYZus{}series3\PY{p}{,} gamma\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+         model13
+         data\PYZus{}forecast\PYZus{}holt \PY{o}{\PYZlt{}\PYZhy{}} forecast\PY{p}{(}model13\PY{p}{,} h\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}holt\PY{p}{)}
+         plot\PY{p}{(}data\PYZus{}forecast\PYZus{}holt\PY{p}{,} \PY{p}{,}xlim\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2017.11}\PY{p}{,}\PY{l+m}{2018.2}\PY{p}{)}\PY{p}{)}
+         data\PYZus{}forecast\PYZus{}holt
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Holt-Winters exponential smoothing with trend and without seasonal component.
+
+Call:
+HoltWinters(x = time_series3, gamma = FALSE)
+
+Smoothing parameters:
+ alpha: 0.5032057
+ beta : 0.09194811
+ gamma: FALSE
+
+Coefficients:
+        [,1]
+a 3050.39138
+b   62.40611
+    \end{verbatim}
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & 2.323311   & 43.32455   & 29.40548   & -0.857256  & 7.895946   & 0.3084917  & 0.02210322\\
+\end{tabular}
+
+
+    
+    
+    \begin{verbatim}
+         Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+Dec 2017       3112.797 3057.292 3168.303 3027.909 3197.686
+Jan 2018       3175.204 3111.871 3238.537 3078.344 3272.063
+Feb 2018       3237.610 3166.164 3309.056 3128.343 3346.877
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_186_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}71}]:} \PY{k+kp}{summary}\PY{p}{(}data\PYZus{}forecast\PYZus{}holt\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Forecast method: HoltWinters
+
+Model Information:
+Holt-Winters exponential smoothing with trend and without seasonal component.
+
+Call:
+HoltWinters(x = time\_series3, gamma = FALSE)
+
+Smoothing parameters:
+ alpha: 0.5032057
+ beta : 0.09194811
+ gamma: FALSE
+
+Coefficients:
+        [,1]
+a 3050.39138
+b   62.40611
+
+Error measures:
+                   ME     RMSE      MAE       MPE     MAPE      MASE       ACF1
+Training set 2.323311 43.32455 29.40548 -0.857256 7.895946 0.3084917 0.02210322
+
+Forecasts:
+         Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+Dec 2017       3112.797 3057.292 3168.303 3027.909 3197.686
+Jan 2018       3175.204 3111.871 3238.537 3078.344 3272.063
+Feb 2018       3237.610 3166.164 3309.056 3128.343 3346.877
+
+    \end{Verbatim}
+
+    Düzleştirme katsayı değeri arttıkça daha büyük tahmin farklılıkları
+oluşmaktadır. Basit üstel düzleştirme yöntemi uyguladığımızda gelen
+alpha değeri 0.5032057'dir. Bu sonuçta değerin düşük olduğunu gösterir.
+Hata oranı ortalama değerdedir.Diğer modellerde incelenip en uygun
+öngörü model seçilmelidir.
+
+    \subsubsection{Holt-Winters Yöntemi: (Doğrusal Trendi ve Mevsimlik Etkileri Olan Seriler için)}\label{holt-winters-yuxf6ntemi-doux11frusal-trendi-ve-mevsimlik-etkileri-olan-seriler-iuxe7in}
+
+Holt-Winters Yöntemi üç temel düzeltme esitliğine sahiptir. Temel, trend
+ve mevsimsellik için olan bu üç düzeltme sabiti ile yapılan düzeltmeler,
+Holt'un Dogrusal Yöntemi'ne benzer olarak tek toplam esitlikte
+toplanarak mevsimsellik esitligi elde etmektedir.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}72}]:} model14 \PY{o}{\PYZlt{}\PYZhy{}}HoltWinters\PY{p}{(}time\PYZus{}series3\PY{p}{)}
+         model14
+         data\PYZus{}forecast\PYZus{}holtWinter \PY{o}{\PYZlt{}\PYZhy{}} forecast\PY{p}{(}model14\PY{p}{,} h\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}holtWinter\PY{p}{)}
+         plot\PY{p}{(}data\PYZus{}forecast\PYZus{}holtWinter\PY{p}{,} \PY{p}{,}xlim\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2017.1}\PY{p}{,}\PY{l+m}{2018.2}\PY{p}{)}\PY{p}{)}
+         data\PYZus{}forecast\PYZus{}holtWinter
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Holt-Winters exponential smoothing with trend and additive seasonal component.
+
+Call:
+HoltWinters(x = time_series3)
+
+Smoothing parameters:
+ alpha: 0.6076044
+ beta : 0.07480512
+ gamma: 0.2946021
+
+Coefficients:
+           [,1]
+a   3051.309931
+b     58.897088
+s1    38.646959
+s2   -67.966539
+s3    39.639302
+s4    49.920330
+s5    11.787548
+s6    51.898138
+s7   -17.438469
+s8    -7.923449
+s9    15.317955
+s10  -10.934216
+s11   40.844742
+s12    6.342074
+    \end{verbatim}
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & 3.013304   & 39.89378   & 26.40596   & -0.2875972 & 7.228475   & 0.2770238  & 0.05248844\\
+\end{tabular}
+
+
+    
+    
+    \begin{verbatim}
+         Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+Dec 2017       3148.854 3097.815 3199.893 3070.796 3226.912
+Jan 2018       3101.138 3040.179 3162.096 3007.909 3194.366
+Feb 2018       3267.640 3197.022 3338.259 3159.639 3375.642
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_190_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}73}]:} \PY{k+kp}{summary}\PY{p}{(}data\PYZus{}forecast\PYZus{}holtWinter\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Forecast method: HoltWinters
+
+Model Information:
+Holt-Winters exponential smoothing with trend and additive seasonal component.
+
+Call:
+HoltWinters(x = time\_series3)
+
+Smoothing parameters:
+ alpha: 0.6076044
+ beta : 0.07480512
+ gamma: 0.2946021
+
+Coefficients:
+           [,1]
+a   3051.309931
+b     58.897088
+s1    38.646959
+s2   -67.966539
+s3    39.639302
+s4    49.920330
+s5    11.787548
+s6    51.898138
+s7   -17.438469
+s8    -7.923449
+s9    15.317955
+s10  -10.934216
+s11   40.844742
+s12    6.342074
+
+Error measures:
+                   ME     RMSE      MAE        MPE     MAPE      MASE
+Training set 3.013304 39.89378 26.40596 -0.2875972 7.228475 0.2770238
+                   ACF1
+Training set 0.05248844
+
+Forecasts:
+         Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+Dec 2017       3148.854 3097.815 3199.893 3070.796 3226.912
+Jan 2018       3101.138 3040.179 3162.096 3007.909 3194.366
+Feb 2018       3267.640 3197.022 3338.259 3159.639 3375.642
+
+    \end{Verbatim}
+
+    Düzleştirme katsayı değeri arttıkça daha büyük tahmin farklılıkları
+oluşmaktadır. Basit üstel düzleştirme yöntemi uyguladığımızda gelen
+alpha değeri 0.6076044'dir. Bu sonuçta değerin büyük olduğunu gösterir.
+Hata oranı fazladır. O yüzden öngörü yaparken bu model seçilmemelidir.
+\pagebreak 
+
+Aşağıda genel olarak bütün doğrulukları göstereceğiz.Hatırlamak için
+
+ME:Ortalama Hata
+
+MAE : Ortalama Mutlak Hata
+
+MSE: Ortalama Hata Kare
+
+MPE: Ortalama Yüzde Hata
+
+MAPE: Ortalama Mutlak Yüzde Hata
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}74}]:} accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}ets\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}simple\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}holt\PY{p}{)}
+         accuracy\PY{p}{(}data\PYZus{}forecast\PYZus{}holtWinter\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & 2.774238   & 39.27737   & 26.06343   & -0.3375955 & 7.387411   & 0.2734303  & 0.04872081\\
+\end{tabular}
+
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & 8.410204    & 47.56481    & 30.51237    & 0.03430261  & 7.450028    & 0.320104    & -0.06453352\\
+\end{tabular}
+
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & 2.323311   & 43.32455   & 29.40548   & -0.857256  & 7.895946   & 0.3084917  & 0.02210322\\
+\end{tabular}
+
+
+    
+    \begin{tabular}{r|lllllll}
+  & ME & RMSE & MAE & MPE & MAPE & MASE & ACF1\\
+\hline
+	Training set & 3.013304   & 39.89378   & 26.40596   & -0.2875972 & 7.228475   & 0.2770238  & 0.05248844\\
+\end{tabular}
+
+
+    
+    Yapılan 5 farklı öngörü modelinin hata değerlerini karşılaştırmak için
+literatürde en çok kullanılan ve tercih edilen Ortalama Mutlak Hata
+(MAE) değerini kullanılırız. Bu karşılaştırmaya göre ets yöntemi en
+uygun yöntemdir.
+
+    \subsubsection{Florida Field Production of Crude Oil - Zaman Serilerinde Öngörü Özet}\label{florida-field-production-of-crude-oil---zaman-serilerinde-uxf6nguxf6ruxfc-uxf6zet}
+
+Verimizde öngörü yapabilmek için tahminleme verisi ve test verisi olmak
+üzere iki veri seti oluşturduk.Tahminleme verisini Ocak 1981 ile Kasım
+2017 arasını , test verisi için son üç ayı yani Aralık 2017 ile Şubat
+2018 arasında aldık. Sırasıyla ets,holtwinters modellerini uyguladık. Hata terimleri incelendiğinde arima modelinin öngörü için daha uygun olduğuna karar verdik.
+
+    Petrol verileri ile ilgili analiz ve öngörü hesaplamalarını yapmış olduk.
+\pagebreak
+    \section{Kaynakça}\label{kaynakuxe7a}
+
+\begin{itemize}
+\tightlist
+\item
+  Brockwell, Richard A. Davis (2002). Introduction to Time Series and
+  Forecasting
+\item
+  Box, G. E. P., Jenkins, G. M., and Reinsel, G. C. (1994). Time Series
+  Analysis, Forecasting and Control, 3rd ed. Prentice Hall, Englewood
+  Clifs, NJ.
+\item
+  Cryer, J. D. and Chan, K. S. (2008). Time series analysis: with
+  applications in R.Springer, 106-107.
+\item
+  Dickey, D. A. and W. A. Fuller (1981) Likelihood ratio statistics for
+  autoregressive time series with a unit root, Econometrica, 49,
+  1057--1071.
+\item
+  Frances PH (1991). Seasonality, non-stationarity, and the forecasting
+  of monthly time series.International Journal of Forecasting, 7:
+  199--208.
+\item
+  Introduction to Forecasting with ARIMA in R,
+  https://www.datascience.com/blog/introduction-to-forecasting-with-arima-in-r-learn-data-science-tutorials
+\item
+  Kayım, H., 1985. İstatistiksel ön tahmin yöntemleri: Hacettepe
+  Üniversitesi İktisadi ve İdari Bilimler Fakültesi.
+\item
+  Montgomery, D. C., Johnson, L. A. and Gardiner, J. S., 1990.
+  Forecasting and time series analysis: McGraw-Hill Companies.
+\item
+  The R Project for Statistical Computing , https://www.r-project.org/
+\end{itemize}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
